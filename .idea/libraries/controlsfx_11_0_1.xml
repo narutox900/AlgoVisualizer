@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="controlsfx-11.0.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/controlsfx-11.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/jfoenix-9.0.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

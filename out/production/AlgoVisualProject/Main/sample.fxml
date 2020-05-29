@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="451.0" prefWidth="144.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="84.0" prefWidth="154.0" text="Algorithms Visualizer" />
+            <JFXComboBox promptText="Select algorithms">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </JFXComboBox>
+            <JFXButton alignment="CENTER">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <graphic>
+                  <Pane prefHeight="18.0" prefWidth="20.0" />
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="114.0">
+               <graphic>
+                  <Pane prefHeight="18.0" prefWidth="20.0" />
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="140.0">
+               <graphic>
+                  <Pane prefHeight="18.0" prefWidth="20.0" />
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="165.0">
+               <graphic>
+                  <Pane prefHeight="18.0" prefWidth="20.0" />
+               </graphic>
+            </JFXButton>
+            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="191.0">
+               <graphic>
+                  <Pane prefHeight="18.0" prefWidth="20.0" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>

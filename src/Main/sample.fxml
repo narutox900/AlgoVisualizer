@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="371.0" prefWidth="154.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXComboBox fx:id="algoOptions" promptText="Select algorithms">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </JFXComboBox>
+            <JFXButton alignment="CENTER" text="Start">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="114.0" text="Clear Board">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="140.0" text="Clear Path">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="165.0" text="Pause/Resume">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="106.0" prefWidth="154.0" style="-fx-background-color: #bf91d9;" text="Algorithms Visualizer" />
+            <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="128.0">
+               <children>
+                  <JFXButton fx:id="sourceButton" alignment="CENTER" prefHeight="34.0" prefWidth="94.0" text="Source">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #F9D89C;" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="targetButton" alignment="CENTER" prefHeight="34.0" prefWidth="118.0" text="Destination">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #BC658D;" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="164.0" layoutY="10.0" prefHeight="100.0" prefWidth="128.0">
+               <children>
+                  <JFXButton alignment="CENTER" prefHeight="34.0" prefWidth="132.0" text="Obstacles">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #202040;" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="292.0" layoutY="10.0" prefHeight="100.0" prefWidth="128.0">
+               <children>
+                  <JFXButton alignment="CENTER" prefHeight="34.0" prefWidth="132.0" text="Shortest Path">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #8ec6c5;" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="420.0" layoutY="10.0" prefHeight="100.0" prefWidth="178.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="74.0" text="Visited">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #fbcffc;" />
+                     </graphic>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="68.0" prefHeight="18.0" prefWidth="74.0" text="Unvisited">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #CFF1EF;" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <GridPane gridLinesVisible="true" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <BorderPane.margin>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </BorderPane.margin>
+      </GridPane>
+   </center>
+</BorderPane>
