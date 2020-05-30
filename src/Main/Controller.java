@@ -133,8 +133,6 @@ public class Controller implements Initializable {
         BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-color: " + background + ";");
     }
 
-    private void disableButton() {
-    }
 
     private void redrawGrid() {
         for (int x = 0; x < Constants.ROW; x++) {
@@ -160,6 +158,18 @@ public class Controller implements Initializable {
 
         CellGrid[currentST[0][0]][currentST[0][1]].state = CellState.SOURCE;
         CellGrid[currentST[1][0]][currentST[1][1]].state = CellState.TARGET;
+    }
+
+    public void toggleButton(boolean logic) {
+        stopButton.setDisable(logic);
+        pauseButton.setDisable(logic);
+        sourceButton.setDisable(!logic);
+        targetButton.setDisable(!logic);
+        wallButton.setDisable(!logic);
+        unvisitedButton.setDisable(!logic);
+        startButton.setDisable(!logic);
+        clearPathButton.setDisable(!logic);
+        clearButton.setDisable(!logic);
     }
 
     // Events
@@ -189,7 +199,7 @@ public class Controller implements Initializable {
     public void startBtnEvent(ActionEvent actionEvent) {
         // Disable all button, disable draw mode
         applyColor = false;
-        disableButton();
+        toggleButton(false);
 
         if (Constants.currentThread == null && currentST[0][0] != -1 && currentST[1][0] != -1 && selectedAlgo != -1) {
             Algorithm algorithm = null;
@@ -207,7 +217,6 @@ public class Controller implements Initializable {
             }
 
             Constants.currentThread = algorithm;
-            toggleButton(false);
             algorithm.initialize(CellGrid[currentST[0][0]][currentST[0][1]], CellGrid[currentST[1][0]][currentST[1][1]]);
             algorithm.start();
 
@@ -240,14 +249,17 @@ public class Controller implements Initializable {
 
     @FXML
     public void pauseBtnEvent(ActionEvent actionEvent)  {
-
+        Constants.isPause = !(Constants.isPause);
     }
 
     @FXML
     public void stopBtnEvent(ActionEvent actionEvent) {
         try {
-            if (Constants.currentThread != null) Constants.currentThread.killThread();
-            Constants.currentThread = null;
+            if (Constants.currentThread != null)
+            {
+                Constants.currentThread.killThread();
+                Constants.currentThread = null;
+            }
 
             applyColor = false;
 
@@ -261,19 +273,8 @@ public class Controller implements Initializable {
             }
             toggleButton(true);
         } catch (Exception e) {
+            System.out.println("Error when stopping");
         }
     }
 
-
-    public void toggleButton(boolean logic) {
-        stopButton.setDisable(logic);
-        pauseButton.setDisable(logic);
-        sourceButton.setDisable(!logic);
-        targetButton.setDisable(!logic);
-        wallButton.setDisable(!logic);
-        unvisitedButton.setDisable(!logic);
-        startButton.setDisable(!logic);
-        clearPathButton.setDisable(!logic);
-        clearButton.setDisable(!logic);
-    }
 }

@@ -18,48 +18,61 @@ public class DepthFirst extends Algorithm {
         }
         catch (Exception e) { System.out.println("Can not make thread sleep!"); }
 
-        if (current.state != CellState.SHORTEST && current.state != CellState.TARGET && current.state != CellState.SOURCE)
+        if (!Constants.isPause)
         {
-            Controller.paintBlock(current.x,current.y,Constants.BORDER,Constants.VISITED);
-        }
-        for (int i = 0; i < Constants.NUM_OF_NEIGHBORS && !pathFound && current.weight < shortestPath; i++)
-        {
-            if (inRange(current.x + X[i], current.y + Y[i]))
+            if (current.state != CellState.SHORTEST && current.state != CellState.TARGET && current.state != CellState.SOURCE)
             {
-                Cell next = Controller.CellGrid[current.x + X[i]][current.y + Y[i]];
-
-                if (current.weight + 1 < next.weight)
+                Controller.paintBlock(current.x,current.y,Constants.BORDER,Constants.VISITED);
+            }
+            for (int i = 0; i < Constants.NUM_OF_NEIGHBORS && !pathFound && current.weight < shortestPath; i++)
+            {
+                if (inRange(current.x + X[i], current.y + Y[i]))
                 {
-                    next.weight = current.weight + 1;
-                    next.setParent(current.x, current.y); // set parent for later trace back path
+                    Cell next = Controller.CellGrid[current.x + X[i]][current.y + Y[i]];
 
-                    if (next.state != CellState.TARGET) // if not found
+                    if (current.weight + 1 < next.weight)
                     {
-                        Controller.paintBlock(next.x,next.y,Constants.BORDER,Constants.NEXT_VISIT);
-                        DFS(next); //recursively search for next child
-                    }
-                    else { //target reached
-                        if (next.weight < shortestPath) // new path shorter is found, change to this path
-                        {
-                            shortestPath = next.weight;
-                            if (previousPath != null) //reset the path
-                            {
-                                colorPath(previousPath,Constants.VISITED, false);
-                            }
-                            tracePath(next);
-                        }
+                        next.weight = current.weight + 1;
+                        next.setParent(current.x, current.y); // set parent for later trace back path
 
-                        return;
+                        if (next.state != CellState.TARGET) // if not found
+                        {
+                            Controller.paintBlock(next.x,next.y,Constants.BORDER,Constants.NEXT_VISIT);
+                            DFS(next); //recursively search for next child
+                        }
+                        else { //target reached
+                            if (next.weight < shortestPath) // new path shorter is found, change to this path
+                            {
+                                shortestPath = next.weight;
+                                if (previousPath != null) //reset the path
+                                {
+                                    colorPath(previousPath,Constants.VISITED, false);
+                                }
+                                tracePath(next);
+                            }
+
+                            return;
+                        }
                     }
                 }
             }
-        }
 
-        // reverse if not found
-        if (current.state != CellState.SHORTEST && current.state != CellState.TARGET && current.state != CellState.SOURCE)
+            // reverse if not found
+            if (current.state != CellState.SHORTEST && current.state != CellState.TARGET && current.state != CellState.SOURCE)
+            {
+                Controller.paintBlock(current.x,current.y,Constants.BORDER,Constants.UNVISITED);
+                current.state = CellState.UNVISITED;
+            }
+        }
+        else
         {
-            Controller.paintBlock(current.x,current.y,Constants.BORDER,Constants.UNVISITED);
-            current.state = CellState.UNVISITED;
+            try {
+                Thread.sleep(Constants.THREAD_PAUSE_TIME);
+            }
+            catch (Exception e) { System.out.println("Thread sleep fail"); }
+            finally {
+                DFS(current);
+            }
         }
     }
 

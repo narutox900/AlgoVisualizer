@@ -10,11 +10,6 @@ import java.util.Queue;
 
 public class BreadthFirst extends Algorithm {
 
-    public BreadthFirst() {
-    }
-
-    ;
-
     @Override
     public void run() {
         Queue<Cell> queue = new LinkedList<>();
@@ -26,41 +21,45 @@ public class BreadthFirst extends Algorithm {
             // pop the waiting queue
             while (!queue.isEmpty() && !pathFound) {
                 Thread.sleep(Constants.THREAD_SLEEP_TIME);
-                current = queue.poll();
+                if (!Constants.isPause)
+                {
+                    current = queue.poll();
 
-                if (current.state != CellState.SOURCE)
-                    Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.VISITED);
-                //Go to all neighbors of the current state and push into queue if path not found
-                for (int i = 0; i < Constants.NUM_OF_NEIGHBORS && !pathFound; i++) {
-                    if (inRange(current.x + X[i], current.y + Y[i])) {
+                    if (current.state != CellState.SOURCE)
+                        Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.VISITED);
+                    //Go to all neighbors of the current state and push into queue if path not found
+                    for (int i = 0; i < Constants.NUM_OF_NEIGHBORS && !pathFound; i++) {
+                        if (inRange(current.x + X[i], current.y + Y[i])) {
 
-                        tmp = Controller.CellGrid[current.x + X[i]][current.y + Y[i]];
+                            tmp = Controller.CellGrid[current.x + X[i]][current.y + Y[i]];
 
-                        if (tmp.state == CellState.TARGET || tmp.state == CellState.UNVISITED) {
-                            tmp.weight = current.weight + 1;
-                            tmp.setParent(current.x, current.y);
+                            if (tmp.state == CellState.TARGET || tmp.state == CellState.UNVISITED) {
+                                tmp.weight = current.weight + 1;
+                                tmp.setParent(current.x, current.y);
 
 
-                            if (tmp.state != CellState.TARGET)
-                                Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.NEXT_VISIT);
-                            else {
-                                tracePath(tmp);
-                                shortestPath = tmp.weight;
-                                pathFound = true;
-                                break;
+                                if (tmp.state != CellState.TARGET)
+                                    Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.NEXT_VISIT);
+                                else {
+                                    tracePath(tmp);
+                                    shortestPath = tmp.weight;
+                                    pathFound = true;
+                                    break;
+                                }
+
+                                Controller.CellGrid[tmp.x][tmp.y].state = CellState.VISITED;
+                                queue.add(tmp);
                             }
-
-                            Controller.CellGrid[tmp.x][tmp.y].state = CellState.VISITED;
-                            queue.add(tmp);
                         }
                     }
                 }
+                else
+                    Thread.sleep(Constants.THREAD_PAUSE_TIME);
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Thread interrupted while sleeping");
         }
-        ;
+
     }
 
     //trace back and print out the best path
@@ -71,6 +70,8 @@ public class BreadthFirst extends Algorithm {
             cell = Controller.CellGrid[cell.parent_x][cell.parent_y];
         }
         colorPath(shortestPath, Constants.SHORTEST, true);
+
+        System.out.println("Breadth-First Search Algorithm Finish");
         killThread();
     }
 }

@@ -59,6 +59,13 @@ public class Algorithm extends Thread {
                 try {
                     Controller.CellGrid[current.x][current.y].state = CellState.SHORTEST;
                     Thread.sleep(Constants.THREAD_SLEEP_TIME);
+                    while (Constants.isPause)
+                    {
+                        try{
+                            Thread.sleep(Constants.THREAD_PAUSE_TIME);
+                        }
+                        catch (Exception e) { System.out.println("Thread sleep fail"); }
+                    }
                 } catch (Exception e) {
                     System.out.println("Thread sleep fail");
                 }
@@ -74,6 +81,7 @@ public class Algorithm extends Thread {
 
         pathFound=true;
         this.interrupt();
+
         Constants.currentThread = null;
 
     }
