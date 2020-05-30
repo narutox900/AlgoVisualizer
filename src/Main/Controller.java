@@ -143,7 +143,7 @@ public class Controller implements Initializable{
         }
     }
 
-    private void paintBlock(int x, int y, String border, String background)
+    public synchronized static void paintBlock(int x, int y, String border, String background)
     {
         BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-color: " + background + ";");
     }

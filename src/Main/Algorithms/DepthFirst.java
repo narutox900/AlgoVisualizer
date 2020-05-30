@@ -1,0 +1,87 @@
+package Main.Algorithms;
+
+import Main.Configurations.Constants;
+import Main.Controller;
+import Main.GraphRelated.Cell;
+import Main.GraphRelated.CellState;
+
+import java.util.LinkedList;
+
+public class DepthFirst extends Algorithm {
+    private LinkedList<Cell> previousPath = null; //path lead from source to target but not guarantee the shortest
+
+    private void DFS(Cell current)
+    {
+        // Control the speed of the algorithm
+        try {
+            Thread.sleep(Constants.THREAD_SLEEP_TIME);
+        }
+        catch (Exception e) { System.out.println("Can not make thread sleep!"); }
+
+        if (current.state != CellState.SHORTEST && current.state != CellState.TARGET && current.state != CellState.SOURCE)
+        {
+            Controller.paintBlock(current.x,current.y,Constants.BORDER,Constants.VISITED);
+        }
+        for (int i = 0; i < Constants.NUM_OF_NEIGHBORS && !pathFound && current.weight < shortestPath; i++)
+        {
+            if (inRange(current.x + X[i], current.y + Y[i]))
+            {
+                Cell next = Controller.CellGrid[current.x + X[i]][current.y + Y[i]];
+
+                if (current.weight + 1 < next.weight)
+                {
+                    next.weight = current.weight + 1;
+                    next.setParent(current.x, current.y); // set parent for later trace back path
+
+                    if (next.state != CellState.TARGET) // if not found
+                    {
+                        Controller.paintBlock(current.x,current.y,Constants.BORDER,Constants.NEXT_VISIT);
+                        DFS(next); //recursively search for next child
+                    }
+                    else { //target reached
+                        if (next.weight < shortestPath) // new path shorter is found, change to this path
+                        {
+                            shortestPath = next.weight;
+                            if (previousPath != null) //reset the path
+                            {
+                                colorPath(previousPath,Constants.VISITED, false);
+                            }
+                            tracePath(next);
+                        }
+
+                        return;
+                    }
+                }
+            }
+        }
+
+        // reverse if not found
+        if (current.state != CellState.SHORTEST && current.state != CellState.TARGET && current.state != CellState.SOURCE)
+        {
+            Controller.paintBlock(current.x,current.y,Constants.BORDER,Constants.UNVISITED);
+            current.state = CellState.UNVISITED;
+        }
+    }
+
+    public void tracePath(Cell cell)
+    {
+        LinkedList<Cell> shortestPath = new LinkedList<Cell>();
+        while (cell.state != CellState.SOURCE)
+        {
+            shortestPath.addFirst(cell);
+            cell = Controller.CellGrid[cell.parent_x][cell.parent_y];
+        }
+
+        previousPath = shortestPath;
+        colorPath(shortestPath,Constants.SHORTEST,true);
+    }
+
+    @Override
+    public void run() {
+        source.weight = 0;
+        DFS(source);
+
+        Constants.currentThread = null;
+        System.out.println("Depth-First Search Algorithm Finish");
+    }
+}

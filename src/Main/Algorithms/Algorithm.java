@@ -1,0 +1,69 @@
+package Main.Algorithms;
+
+import Main.Configurations.Constants;
+import Main.Controller;
+import Main.GraphRelated.Cell;
+import Main.GraphRelated.CellState;
+
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+// Similar Part For All Algorithm
+// Inherited from thread for performance improvement
+public class Algorithm extends Thread {
+    // offset value for a particular cell (all its neighbors)
+    public static int[] X = { 0,1,0,-1};
+    public static int[] Y = {-1,0,1, 0};
+
+    protected Cell source;
+    protected Cell target;
+
+    protected boolean pathFound;
+    protected int shortestPath;
+
+    public void initialize(Cell source, Cell target)
+    {
+        this.source = source;
+        this.target = target;
+
+        pathFound = false;
+        shortestPath = Integer.MAX_VALUE;
+    }
+
+    public boolean inRange(int r, int c) {
+        return (r >= 0 && r < Constants.ROW) && (c >= 0 && c < Constants.COL);
+    }
+
+    protected void colorPath(LinkedList<Cell> shortestPath, String color, boolean isShortest)
+    {
+        Cell previous = null, current = null;
+
+        for (Cell cell : shortestPath) {
+            current = cell;
+
+            if (!isShortest) { // change its state to visited state
+                Controller.paintBlock(current.x, current.y, Constants.BORDER, color);
+                Controller.CellGrid[current.x][current.y].state = CellState.VISITED;
+
+                previous = current;
+            } else {
+                if (previous != null) { //make the target box run from source to actual target
+                    Controller.paintBlock(previous.x, previous.y, Constants.BORDER, color);
+                }
+                Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.TARGET);
+                current.state = CellState.SHORTEST;
+
+                previous = current;
+                try {
+                    Controller.CellGrid[current.x][current.y].state = CellState.SHORTEST;
+                    Thread.sleep(Constants.THREAD_SLEEP_TIME);
+                } catch (Exception e) {
+                    System.out.println("Thread sleep fail");
+                }
+            }
+        }
+
+        //repaint the last one to target
+        if(previous != null) Controller.paintBlock(previous.x, previous.y, Constants.BORDER, Constants.TARGET);
+    }
+}
