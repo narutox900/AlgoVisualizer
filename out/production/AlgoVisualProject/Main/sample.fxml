@@ -5,49 +5,176 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Controller">
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="451.0" prefWidth="144.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="371.0" prefWidth="154.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" prefHeight="84.0" prefWidth="154.0" text="Algorithms Visualizer" />
-            <JFXComboBox promptText="Select algorithms">
+            <JFXComboBox fx:id="algoOptions" promptText="Select algorithms">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
+               
             </JFXComboBox>
-            <JFXButton alignment="CENTER">
+            <JFXButton alignment="CENTER" prefHeight="25.0" prefWidth="134.0" text="Start">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="114.0" prefHeight="25.0" prefWidth="134.0" text="Clear Board">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
-               <graphic>
-                  <Pane prefHeight="18.0" prefWidth="20.0" />
-               </graphic>
             </JFXButton>
-            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="114.0">
-               <graphic>
-                  <Pane prefHeight="18.0" prefWidth="20.0" />
-               </graphic>
+            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="140.0" prefHeight="25.0" prefWidth="129.0" text="Clear Path">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
             </JFXButton>
-            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="140.0">
-               <graphic>
-                  <Pane prefHeight="18.0" prefWidth="20.0" />
-               </graphic>
-            </JFXButton>
-            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="165.0">
-               <graphic>
-                  <Pane prefHeight="18.0" prefWidth="20.0" />
-               </graphic>
-            </JFXButton>
-            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="191.0">
-               <graphic>
-                  <Pane prefHeight="18.0" prefWidth="20.0" />
-               </graphic>
+            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="165.0" prefHeight="25.0" prefWidth="124.0" text="Pause/Resume">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
             </JFXButton>
          </children>
       </VBox>
    </left>
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="106.0" prefWidth="154.0" style="-fx-background-color: #bf91d9;" text="Algorithms Visualizer" />
+            <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="128.0">
+               <children>
+                  <JFXButton fx:id="sourceButton" prefHeight="34.0" prefWidth="121.0" text="Source" onAction="#sourceBtnEvent">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #F9D89C;" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="targetButton" prefHeight="34.0" prefWidth="118.0" text="Destination" onAction="#targetBtnEvent">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #BC658D;" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="164.0" layoutY="10.0" prefHeight="100.0" prefWidth="128.0">
+               <children>
+                  <JFXButton fx:id="wallButton" prefHeight="34.0" prefWidth="132.0" text="Wall" onAction="#wallBtnEvent">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #202040;" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="292.0" layoutY="10.0" prefHeight="100.0" prefWidth="128.0">
+               <children>
+                  <JFXButton fx:id="unvisitedButton" prefHeight="34.0" prefWidth="132.0" text="Unvisited" onAction="#unvisitedBtnEvent">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #CFF1EF;" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="420.0" layoutY="10.0" prefHeight="100.0" prefWidth="178.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="132.0" text="Visited">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #fbcffc;" />
+                     </graphic>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="68.0" prefHeight="18.0" prefWidth="133.0" text="Shortest path">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #f1f5a2;" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <GridPane fx:id="platform" gridLinesVisible="true" minHeight="367.0" minWidth="516.0" prefHeight="367.0" prefWidth="516.0" BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </GridPane>
+   </center>
 </BorderPane>
