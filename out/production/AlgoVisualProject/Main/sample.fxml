@@ -27,17 +27,22 @@
                   <Insets top="40.0" />
                </VBox.margin>
             </JFXButton>
-            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="114.0" prefHeight="25.0" prefWidth="134.0" text="Clear Board">
+            <JFXButton fx:id="clearButton" alignment="CENTER" layoutX="56.0" layoutY="114.0" onAction="#clearBtnEvent" prefHeight="25.0" prefWidth="134.0" text="Clear Board">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </JFXButton>
-            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="140.0" prefHeight="25.0" prefWidth="129.0" text="Clear Path">
+            <JFXButton fx:id="clearPathButton" alignment="CENTER" layoutX="56.0" layoutY="140.0" onAction="#clearPathBtnEvent" prefHeight="25.0" prefWidth="129.0" text="Clear Path">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </JFXButton>
-            <JFXButton alignment="CENTER" layoutX="56.0" layoutY="165.0" prefHeight="25.0" prefWidth="124.0" text="Pause/Resume">
+            <JFXButton fx:id="pauseButton" alignment="CENTER" disable="true" layoutX="56.0" layoutY="165.0" onAction="#pauseBtnEvent" prefHeight="25.0" prefWidth="124.0" text="Pause/Resume">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="stopButton" alignment="CENTER" disable="true" onAction="#stopBtnEvent" prefHeight="25.0" prefWidth="124.0" text="Stop">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
@@ -53,12 +58,12 @@
                <children>
                   <JFXButton fx:id="sourceButton" alignment="CENTER" onAction="#sourceBtnEvent" prefHeight="34.0" prefWidth="121.0" text="Source Node">
                      <graphic>
-                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #F9D89C;" />
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #BC658D;" />
                      </graphic>
                   </JFXButton>
                   <JFXButton fx:id="targetButton" onAction="#targetBtnEvent" prefHeight="34.0" prefWidth="118.0" text="Destination">
                      <graphic>
-                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #BC658D;" />
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #ff6363;" />
                      </graphic>
                   </JFXButton>
                </children>
@@ -76,7 +81,7 @@
                <children>
                   <JFXButton fx:id="unvisitedButton" onAction="#unvisitedBtnEvent" prefHeight="34.0" prefWidth="132.0" text="Unvisited">
                      <graphic>
-                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #CFF1EF;" />
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #fffff0;" />
                      </graphic>
                   </JFXButton>
                </children>

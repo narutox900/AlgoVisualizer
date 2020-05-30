@@ -11,9 +11,9 @@ public class Constants
     //Colors
     public static final String BORDER = "black";
     public static final String WALL = "#202040";
-    public static final String UNVISITED = "#CFF1EF";
-    public static final String SOURCE = "#F9D89C";
-    public static final String TARGET = "#BC658D";
+    public static final String UNVISITED = "#fffff0";
+    public static final String SOURCE = "#BC658D";
+    public static final String TARGET = "#ff6363";
     public static final String VISITED = "#fbcffc";
     public static final String NEXT_VISIT = "#b4de87";
     public static final String SHORTEST = "#f1f5a2";
