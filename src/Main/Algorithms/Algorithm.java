@@ -4,7 +4,9 @@ import Main.Configurations.Constants;
 import Main.Controller;
 import Main.GraphRelated.Cell;
 import Main.GraphRelated.CellState;
+import javafx.scene.control.Control;
 
+import javax.swing.*;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -72,6 +74,8 @@ public class Algorithm extends Thread {
 
         pathFound=true;
         this.interrupt();
+        Constants.currentThread = null;
+
     }
 
 

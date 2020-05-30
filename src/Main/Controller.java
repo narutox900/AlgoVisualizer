@@ -207,10 +207,9 @@ public class Controller implements Initializable {
             }
 
             Constants.currentThread = algorithm;
+            toggleButton(false);
             algorithm.initialize(CellGrid[currentST[0][0]][currentST[0][1]], CellGrid[currentST[1][0]][currentST[1][1]]);
             algorithm.start();
-            stopButton.setDisable(false);
-            pauseButton.setDisable(false);
 
 
         }
@@ -251,10 +250,7 @@ public class Controller implements Initializable {
             Constants.currentThread = null;
 
             applyColor = false;
-            pauseButton.setDisable(true);
-            sourceButton.setDisable(false);
-            targetButton.setDisable(false);
-            wallButton.setDisable(false);
+
             for (int i = 0; i < Constants.ROW; i++) {
                 for (int j = 0; j < Constants.COL; j++) {
                     if (CellGrid[i][j].state != CellState.WALL && CellGrid[i][j].state != CellState.SOURCE && CellGrid[i][j].state != CellState.TARGET) {
@@ -263,10 +259,21 @@ public class Controller implements Initializable {
                     }
                 }
             }
-
-            stopButton.setDisable(true);
+            toggleButton(true);
         } catch (Exception e) {
         }
     }
 
+
+    public void toggleButton(boolean logic) {
+        stopButton.setDisable(logic);
+        pauseButton.setDisable(logic);
+        sourceButton.setDisable(!logic);
+        targetButton.setDisable(!logic);
+        wallButton.setDisable(!logic);
+        unvisitedButton.setDisable(!logic);
+        startButton.setDisable(!logic);
+        clearPathButton.setDisable(!logic);
+        clearButton.setDisable(!logic);
+    }
 }
