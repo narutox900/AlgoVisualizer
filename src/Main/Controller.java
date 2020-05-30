@@ -3,6 +3,7 @@ package Main;
 import Main.Algorithms.Algorithm;
 import Main.Algorithms.BreadthFirst;
 import Main.Algorithms.DepthFirst;
+import Main.Animation.BounceIn;
 import Main.GraphRelated.Cell;
 import Main.GraphRelated.CellState;
 import com.jfoenix.controls.JFXButton;
@@ -131,6 +132,7 @@ public class Controller implements Initializable {
 
     public synchronized static void paintBlock(int x, int y, String border, String background) {
         BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-color: " + background + ";");
+        new BounceIn(BorderGrid[x][y]).play();
     }
 
 
@@ -219,8 +221,6 @@ public class Controller implements Initializable {
             Constants.currentThread = algorithm;
             algorithm.initialize(CellGrid[currentST[0][0]][currentST[0][1]], CellGrid[currentST[1][0]][currentST[1][1]]);
             algorithm.start();
-
-
         }
     }
 
@@ -256,21 +256,11 @@ public class Controller implements Initializable {
     public void stopBtnEvent(ActionEvent actionEvent) {
         try {
             if (Constants.currentThread != null)
-            {
                 Constants.currentThread.killThread();
-                Constants.currentThread = null;
-            }
 
             applyColor = false;
-
-            for (int i = 0; i < Constants.ROW; i++) {
-                for (int j = 0; j < Constants.COL; j++) {
-                    if (CellGrid[i][j].state != CellState.WALL && CellGrid[i][j].state != CellState.SOURCE && CellGrid[i][j].state != CellState.TARGET) {
-                        CellGrid[i][j].state = CellState.UNVISITED;
-                        paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
-                    }
-                }
-            }
+            redrawGrid();
+            Constants.isPause = false;
             toggleButton(true);
         } catch (Exception e) {
             System.out.println("Error when stopping");

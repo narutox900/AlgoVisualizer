@@ -18,7 +18,7 @@ public class Constants
     public static final String NEXT_VISIT = "#b4de87";
     public static final String SHORTEST = "#f1f5a2";
     // Algorithm related
-    public static int THREAD_SLEEP_TIME = 40; // milisecs, TODO: use this to increase or decrease visualization's speed.
+    public static int THREAD_SLEEP_TIME = 35; // milisecs, TODO: use this to increase or decrease visualization's speed.
     public static int THREAD_PAUSE_TIME = 1000;
     public static final int NUM_OF_NEIGHBORS = 4;
     public static final int UNVISITED_WEIGHT = Integer.MAX_VALUE;
