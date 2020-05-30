@@ -35,7 +35,7 @@ public class DepthFirst extends Algorithm {
 
                     if (next.state != CellState.TARGET) // if not found
                     {
-                        Controller.paintBlock(current.x,current.y,Constants.BORDER,Constants.NEXT_VISIT);
+                        Controller.paintBlock(next.x,next.y,Constants.BORDER,Constants.NEXT_VISIT);
                         DFS(next); //recursively search for next child
                     }
                     else { //target reached
@@ -74,6 +74,7 @@ public class DepthFirst extends Algorithm {
 
         previousPath = shortestPath;
         colorPath(shortestPath,Constants.SHORTEST,true);
+        killThread(); // fix since DFS do not guarantee best path
     }
 
     @Override

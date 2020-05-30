@@ -66,4 +66,11 @@ public class Algorithm extends Thread {
         //repaint the last one to target
         if(previous != null) Controller.paintBlock(previous.x, previous.y, Constants.BORDER, Constants.TARGET);
     }
+
+    public void killThread() {
+        System.out.println("Thread killed");
+
+        pathFound=true;
+        this.interrupt();
+    }
 }

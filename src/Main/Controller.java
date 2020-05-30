@@ -1,5 +1,7 @@
 package Main;
 
+import Main.Algorithms.Algorithm;
+import Main.Algorithms.DepthFirst;
 import Main.GraphRelated.Cell;
 import Main.GraphRelated.CellState;
 import com.jfoenix.controls.JFXButton;
@@ -18,7 +20,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable{
     @FXML private ComboBox<String> algoOptions;
     @FXML private GridPane platform;
-    @FXML private JFXButton sourceButton, wallButton, unvisitedButton, targetButton;
+    @FXML private JFXButton sourceButton, wallButton, unvisitedButton, targetButton, startButton;
 
     public static BorderPane[][] BorderGrid = new BorderPane[Constants.ROW][Constants.COL];
     public static Cell[][] CellGrid = new Cell[Constants.ROW][Constants.COL];
@@ -147,6 +149,37 @@ public class Controller implements Initializable{
     {
         BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-color: " + background + ";");
     }
+
+    private void disableButton()
+    {}
+
+    private void redrawGrid()
+    {
+        for(int x = 0; x < Constants.ROW; x++) {
+            for (int y = 0; y < Constants.COL; y++) {
+
+                CellGrid[x][y].setParent(-1,-1); // Set parent to null
+
+                // Remove Everything except the walls
+                if(CellGrid[x][y].state != CellState.WALL) {
+                    paintBlock(x, y, Constants.BORDER, Constants.UNVISITED);
+                    CellGrid[x][y].state = CellState.UNVISITED;
+
+                    CellGrid[x][y].weight = Constants.UNVISITED_WEIGHT;
+                }
+                else {
+                    CellGrid[x][y].weight = Constants.WALL_WEIGHT;
+                }
+            }
+        }
+
+        // repaint the source and target point
+        paintBlock(currentST[0][0], currentST[0][1], Constants.BORDER, Constants.SOURCE);
+        paintBlock(currentST[1][0], currentST[1][1], Constants.BORDER, Constants.TARGET);
+
+        CellGrid[currentST[0][0]][currentST[0][1]].state = CellState.SOURCE;
+        CellGrid[currentST[1][0]][currentST[1][1]].state = CellState.TARGET;
+    }
     // Events
     @FXML public void unvisitedBtnEvent(ActionEvent actionEvent) {
         currentState = CellState.UNVISITED;
@@ -164,5 +197,31 @@ public class Controller implements Initializable{
 
     @FXML public void targetBtnEvent(ActionEvent actionEvent) {
         currentState = CellState.TARGET;
+    }
+
+    @FXML public void startBtnEvent(ActionEvent actionEvent) {
+        // Disable all button, disable draw mode
+        applyColor = false;
+        disableButton();
+
+        if (Constants.currentThread == null && currentST[0][0] != -1 && currentST[1][0] != -1 && selectedAlgo != -1)
+        {
+            Algorithm algorithm = null;
+            redrawGrid();
+
+            switch (selectedAlgo)
+            {
+                case 0: break;
+                case 1:
+                    algorithm = new DepthFirst();
+                    break;
+                case 2: break;
+            }
+
+            Constants.currentThread = algorithm;
+            algorithm.initialize(CellGrid[currentST[0][0]][currentST[0][1]], CellGrid[currentST[1][0]][currentST[1][1]]);
+            algorithm.start();
+
+        }
     }
 }
