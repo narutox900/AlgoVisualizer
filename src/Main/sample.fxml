@@ -16,13 +16,13 @@
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="371.0" prefWidth="154.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXComboBox fx:id="algoOptions" promptText="Select algorithms">
+            <JFXComboBox fx:id="algoOptions" focusColor="#be56e1" promptText="Select algorithms">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
                
             </JFXComboBox>
-            <JFXButton alignment="CENTER" prefHeight="25.0" prefWidth="134.0" text="Start">
+            <JFXButton fx:id="startButton" alignment="CENTER" onAction="#startBtnEvent" prefHeight="25.0" prefWidth="134.0" text="Start">
                <VBox.margin>
                   <Insets top="40.0" />
                </VBox.margin>
@@ -51,12 +51,12 @@
             <Label alignment="CENTER" prefHeight="106.0" prefWidth="154.0" style="-fx-background-color: #bf91d9;" text="Algorithms Visualizer" />
             <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="128.0">
                <children>
-                  <JFXButton fx:id="sourceButton" prefHeight="34.0" prefWidth="121.0" text="Source" onAction="#sourceBtnEvent">
+                  <JFXButton fx:id="sourceButton" alignment="CENTER" onAction="#sourceBtnEvent" prefHeight="34.0" prefWidth="121.0" text="Source Node">
                      <graphic>
                         <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #F9D89C;" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="targetButton" prefHeight="34.0" prefWidth="118.0" text="Destination" onAction="#targetBtnEvent">
+                  <JFXButton fx:id="targetButton" onAction="#targetBtnEvent" prefHeight="34.0" prefWidth="118.0" text="Destination">
                      <graphic>
                         <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #BC658D;" />
                      </graphic>
@@ -65,7 +65,7 @@
             </VBox>
             <VBox alignment="CENTER" layoutX="164.0" layoutY="10.0" prefHeight="100.0" prefWidth="128.0">
                <children>
-                  <JFXButton fx:id="wallButton" prefHeight="34.0" prefWidth="132.0" text="Wall" onAction="#wallBtnEvent">
+                  <JFXButton fx:id="wallButton" onAction="#wallBtnEvent" prefHeight="34.0" prefWidth="132.0" text="Wall">
                      <graphic>
                         <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #202040;" />
                      </graphic>
@@ -74,7 +74,7 @@
             </VBox>
             <VBox alignment="CENTER" layoutX="292.0" layoutY="10.0" prefHeight="100.0" prefWidth="128.0">
                <children>
-                  <JFXButton fx:id="unvisitedButton" prefHeight="34.0" prefWidth="132.0" text="Unvisited" onAction="#unvisitedBtnEvent">
+                  <JFXButton fx:id="unvisitedButton" onAction="#unvisitedBtnEvent" prefHeight="34.0" prefWidth="132.0" text="Unvisited">
                      <graphic>
                         <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #CFF1EF;" />
                      </graphic>
@@ -87,6 +87,14 @@
                      <graphic>
                         <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #fbcffc;" />
                      </graphic>
+                  </Label>
+                  <Label prefHeight="18.0" prefWidth="132.0" text="Next Visit">
+                     <graphic>
+                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #b4de87;" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
                   </Label>
                   <Label layoutX="10.0" layoutY="68.0" prefHeight="18.0" prefWidth="133.0" text="Shortest path">
                      <graphic>
@@ -102,7 +110,7 @@
       </HBox>
    </top>
    <center>
-      <GridPane fx:id="platform" gridLinesVisible="true" minHeight="367.0" minWidth="516.0" prefHeight="367.0" prefWidth="516.0" BorderPane.alignment="CENTER">
+      <GridPane fx:id="platform" gridLinesVisible="true" minHeight="142.0" minWidth="477.0" prefHeight="331.0" prefWidth="477.0" BorderPane.alignment="CENTER">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
