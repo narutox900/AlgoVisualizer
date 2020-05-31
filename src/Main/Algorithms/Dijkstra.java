@@ -190,17 +190,12 @@ public class Dijkstra extends Algorithm {
         return nextNode;
     }
 
-    public Cell closestNode(LinkedList<Cell> queue) {
-        Cell currentCloset = null;
-        currentCloset = queue.peekFirst();
-        queue.clear();
-        return currentCloset;
-    }
+
     @Override
     public void run() {
         LinkedList<Cell> queue = new LinkedList<>();
         Cell current, tmp;
-
+        queue.clear();
         source.distance = 0;
         source.direction = "right";
         queue.add(source);
@@ -228,6 +223,7 @@ public class Dijkstra extends Algorithm {
 
                             tmp = Controller.CellGrid[current.x + X[i]][current.y + Y[i]];
                             if (tmp.state != CellState.WALL) {
+
                                 if (tmp.state == CellState.WEIGHT)
                                 {
                                     tmp.distance = current.distance + 5;
@@ -240,13 +236,6 @@ public class Dijkstra extends Algorithm {
 
                                 if (tmp.state == CellState.TARGET || tmp.state == CellState.UNVISITED || tmp.state == CellState.WEIGHT) {
 
-                                    // Update distance based on weighted cell.
-
-                                    if (min_dis > tmp.distance) {
-                                        min_dis = tmp.distance;
-                                        min_dis_cell = tmp;
-                                    }
-
                                     if (tmp.state != CellState.TARGET)
                                     {
                                         Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.NEXT_VISIT);
@@ -255,8 +244,9 @@ public class Dijkstra extends Algorithm {
                                     }
 
                                     else {
+                                        //System.out.println("tracing...");
                                         tracePath(tmp);
-                                        shortestPath = tmp.distance;
+                                        //shortestPath = tmp.distance;
                                         pathFound = true;
                                         break;
                                     }
@@ -272,12 +262,15 @@ public class Dijkstra extends Algorithm {
                     Thread.sleep(Constants.THREAD_PAUSE_TIME);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Thread interrupted while sleeping");
         }
     }
 
     public void tracePath(Cell cell) {
+        //System.out.println("tracing...");
         LinkedList<Cell> shortestPath = new LinkedList<Cell>();
+
         while (cell.state != CellState.SOURCE) {
             shortestPath.addFirst(cell);
             cell = Controller.CellGrid[cell.parent_x][cell.parent_y];

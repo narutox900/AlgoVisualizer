@@ -180,7 +180,7 @@ public class Controller implements Initializable {
             for (int y = 0; y < Constants.COL; y++) {
 
                 CellGrid[x][y].setParent(-1, -1); // Set parent to null
-
+                CellGrid[x][y].distance = 99999999;
                 // Remove Everything except the walls
                 if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].state != CellState.WEIGHT) {
                     paintBlock(x, y, Constants.BORDER, Constants.UNVISITED);
@@ -286,6 +286,7 @@ public class Controller implements Initializable {
             for (int j = 0; j < Constants.COL; j++) {
                 CellGrid[i][j].state = CellState.UNVISITED;
                 CellGrid[i][j].weighted = false;
+                CellGrid[i][j].distance = 99999999;
                 paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
             }
         }
@@ -299,6 +300,7 @@ public class Controller implements Initializable {
                 if (CellGrid[i][j].state != CellState.WALL && CellGrid[i][j].state != CellState.WEIGHT && CellGrid[i][j].state != CellState.SOURCE && CellGrid[i][j].state != CellState.TARGET) {
                     CellGrid[i][j].state = CellState.UNVISITED;
                     paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
+                    CellGrid[i][j].distance = 99999999;
                 }
             }
         }
