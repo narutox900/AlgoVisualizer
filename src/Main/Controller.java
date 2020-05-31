@@ -45,7 +45,10 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         algoOptions.getItems().addAll("Breadth First Search", "Depth First Search", "Dijkstra Algorithm");
-        algoOptions.setOnAction(e -> selectedAlgo = algoOptions.getSelectionModel().getSelectedIndex());
+        algoOptions.setOnAction(e -> {
+            selectedAlgo = algoOptions.getSelectionModel().getSelectedIndex();
+            startButton.setDisable(false);
+        });
 
         for (int x = 0; x < Constants.ROW; x++) {
             for (int y = 0; y < Constants.COL; y++) {
@@ -218,11 +221,11 @@ public class Controller implements Initializable {
 
     @FXML
     public void startBtnEvent(ActionEvent actionEvent) {
-        // Disable all button, disable draw mode
-        applyColor = false;
-        toggleButton(false);
 
         if (Constants.currentThread == null && currentST[0][0] != -1 && currentST[1][0] != -1 && selectedAlgo != -1) {
+            // Disable all button, disable draw mode
+            applyColor = false;
+            toggleButton(false);
             Algorithm algorithm = null;
             clearGrid();
 

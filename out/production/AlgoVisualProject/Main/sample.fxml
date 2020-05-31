@@ -22,7 +22,7 @@
                </VBox.margin>
                
             </JFXComboBox>
-            <JFXButton fx:id="startButton" alignment="CENTER" onAction="#startBtnEvent" prefHeight="25.0" prefWidth="134.0" text="Start">
+            <JFXButton fx:id="startButton" alignment="CENTER" disable="true" onAction="#startBtnEvent" prefHeight="25.0" prefWidth="134.0" text="Start">
                <VBox.margin>
                   <Insets top="40.0" />
                </VBox.margin>
