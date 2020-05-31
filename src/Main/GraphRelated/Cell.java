@@ -7,7 +7,7 @@ public class Cell {
     public int distance;
     public int parent_x, parent_y;
     public String direction;
-    public boolean update;
+    public boolean weighted;
 
     public CellState state;
 
@@ -17,7 +17,8 @@ public class Cell {
         this.y = y;
         state = CellState.UNVISITED;
         this.distance = 999999999;
-        this.update = true;
+        //this.update = true;
+        this.weighted = false;
     }
 
     public void setParent(int x, int y)

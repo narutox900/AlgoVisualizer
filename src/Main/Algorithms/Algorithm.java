@@ -50,8 +50,13 @@ public class Algorithm extends Thread {
                 previous = current;
             } else {
                 if (previous != null) { //make the target box run from source to actual target
-                    Controller.paintBlock(previous.x, previous.y, Constants.BORDER, color);
+                    if(previous.weighted)
+                        Controller.paintBlock(current.x, current.y, Constants.BORDER, "#ffc40c");
+                    else Controller.paintBlock(previous.x, previous.y, Constants.BORDER, color);
                 }
+                if(current.weighted)
+                    Controller.paintBlock(current.x, current.y, Constants.BORDER, "#ffc40c");
+                else
                 Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.TARGET);
                 current.state = CellState.SHORTEST;
 

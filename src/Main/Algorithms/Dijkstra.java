@@ -117,7 +117,7 @@ public class Dijkstra extends Algorithm {
             else if (currNode.direction == "right")
             {
                 distance = 2;
-                System.out.println(distance);
+
                 direction = "down";
             }
             else if (currNode.direction == "left")
@@ -185,11 +185,12 @@ public class Dijkstra extends Algorithm {
 
         //getDistance(currNode, nextNode, dis_and_dir);
 
-        System.out.printf("\ndistance = ", distance);
+
 
         if(currNode == source)
             nextNode.distance = 999999999;
         int distanceToCompare = currNode.distance + distance;
+
         if (distanceToCompare < nextNode.distance) {
             nextNode.distance = distanceToCompare;
             nextNode.parent_x = currNode.x;
@@ -223,49 +224,69 @@ public class Dijkstra extends Algorithm {
                     Cell min_dis_cell = null;
                     int min_dis = 9999999;
                     if (current.state != CellState.SOURCE)
-                        Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.VISITED);
+                    {
+                        if(current.weighted)
+                            Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.WEIGHT);
+                        else
+                            Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.VISITED);
+                    }
+
                     //Go to all neighbors of the current state and push into queue if path not found
 
                     for (int i = 0; i < Constants.NUM_OF_NEIGHBORS && !pathFound; i++) {
                         if (inRange(current.x + X[i], current.y + Y[i])) {
 
                             tmp = Controller.CellGrid[current.x + X[i]][current.y + Y[i]];
-                            tmp = updateNode(current, tmp);
-
-                            if (tmp.state == CellState.TARGET || tmp.state == CellState.UNVISITED) {
-
-                                // Update distance based on weighted cell.
-
-                                //tmp.weight = current.weight + 1;
-                                //tmp.setParent(current.x, current.y);
-
-                                //tmp = updateNode(current, tmp);
-                                if (min_dis > tmp.distance)
+                            if (tmp.state != CellState.WALL) {
+                                if (tmp.state == CellState.WEIGHT)
                                 {
-                                    min_dis = tmp.distance;
-                                    min_dis_cell = tmp;
-
+                                    tmp.distance = current.distance + 5;
+                                    tmp.parent_x = current.x;
+                                    tmp.parent_y = current.y;
+                                    tmp.direction = current.direction;
                                 }
+                                else
+                                tmp = updateNode(current, tmp);
+
+                                if (tmp.state == CellState.TARGET || tmp.state == CellState.UNVISITED || tmp.state == CellState.WEIGHT) {
+
+                                    // Update distance based on weighted cell.
+
+                                    //tmp.weight = current.weight + 1;
+                                    //tmp.setParent(current.x, current.y);
+
+                                    //tmp = updateNode(current, tmp);
+                                    if (min_dis > tmp.distance) {
+                                        min_dis = tmp.distance;
+                                        min_dis_cell = tmp;
+
+                                    }
 
 
-                                if (tmp.state != CellState.TARGET )
-                                    Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.NEXT_VISIT);
-                                else {
-                                    tracePath(tmp);
-                                    shortestPath = tmp.distance;
-                                    pathFound = true;
-                                    break;
+                                    if (tmp.state != CellState.TARGET)
+                                    {
+                                        Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.NEXT_VISIT);
+                                        if(tmp.weighted)
+                                            Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.WEIGHT);
+                                    }
+
+                                    else {
+                                        tracePath(tmp);
+                                        shortestPath = tmp.distance;
+                                        pathFound = true;
+                                        break;
+                                    }
+                                    //if(tmp.state != CellState.WEIGHT)
+                                        //Controller.CellGrid[tmp.x][tmp.y].state = CellState.VISITED;
+
+                                    Controller.CellGrid[tmp.x][tmp.y].state = CellState.VISITED;
+                                    queue.add(tmp);
                                 }
-
-                                Controller.CellGrid[tmp.x][tmp.y].state = CellState.VISITED;
-                                queue.add(tmp);
                             }
                         }
                     }
 
-                    //queue.addFirst(min_dis_cell);
-                    for(int j = 0; j < queue.size(); j++)
-                        System.out.printf("%d  ",queue.get(j).distance);
+
                 }
                 else
                     Thread.sleep(Constants.THREAD_PAUSE_TIME);

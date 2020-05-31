@@ -3,20 +3,24 @@ package Main;
 import Main.Algorithms.Algorithm;
 import Main.Algorithms.BreadthFirst;
 import Main.Algorithms.DepthFirst;
+
 import Main.Algorithms.Dijkstra;
+
+import Main.Animation.BounceIn;
+
 import Main.GraphRelated.Cell;
 import Main.GraphRelated.CellState;
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.event.ActionEvent;
 import Main.Configurations.Constants;
+import javafx.scene.layout.Pane;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -24,9 +28,11 @@ public class Controller implements Initializable {
     @FXML
     private ComboBox<String> algoOptions;
     @FXML
+    private Pane gridContainer;
+    @FXML
     private GridPane platform;
     @FXML
-    private JFXButton sourceButton, wallButton, unvisitedButton, targetButton, startButton, stopButton, clearButton, clearPathButton, pauseButton;
+    private JFXButton sourceButton, wallButton, unvisitedButton, targetButton, weightButton, startButton, stopButton, clearButton, clearPathButton, pauseButton;
 
     public static BorderPane[][] BorderGrid = new BorderPane[Constants.ROW][Constants.COL];
     public static Cell[][] CellGrid = new Cell[Constants.ROW][Constants.COL];
@@ -36,6 +42,8 @@ public class Controller implements Initializable {
     private int selectedAlgo;
     private CellState currentState;
     private boolean applyColor;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,6 +62,14 @@ public class Controller implements Initializable {
         selectedAlgo = -1; //initially no algorithm is selected.
         currentState = null;
         applyColor = false;
+        gridInit();
+    }
+
+
+
+    private void gridInit()
+    {
+        System.out.println(gridContainer.prefWidth(-1));
     }
 
     private void constructCell(int x, int y) {
@@ -69,6 +85,14 @@ public class Controller implements Initializable {
                 if (CellGrid[x][y].state != CellState.SOURCE && CellGrid[x][y].state != CellState.TARGET && applyColor) {
                     tmpPane.setStyle("-fx-border-color: " + Constants.BORDER + "; -fx-background-color: " + Constants.WALL + ";");
                     CellGrid[x][y].state = CellState.WALL;
+                }
+            }
+
+            if (currentState == CellState.WEIGHT) {
+                if (CellGrid[x][y].state != CellState.SOURCE && CellGrid[x][y].state != CellState.TARGET && applyColor) {
+                    tmpPane.setStyle("-fx-border-color: " + Constants.BORDER + "; -fx-background-color: " + Constants.WEIGHT + ";");
+                    CellGrid[x][y].state = CellState.WEIGHT;
+                    CellGrid[x][y].weighted = true;
                 }
             }
 
@@ -104,19 +128,25 @@ public class Controller implements Initializable {
                 }
             }
 
-            if (currentState == CellState.WALL || currentState == CellState.UNVISITED) {
+            if (currentState == CellState.WALL || currentState == CellState.WEIGHT || currentState == CellState.UNVISITED) {
                 applyColor = !(applyColor);
 
                 if (applyColor && CellGrid[x][y].state != CellState.SOURCE && CellGrid[x][y].state != CellState.TARGET) {
                     if (currentState == CellState.WALL) {
                         paintBlock(x, y, Constants.BORDER, Constants.WALL);
                         CellGrid[x][y].state = CellState.WALL;
-                    } else {
+                    } else if (currentState == CellState.WEIGHT) {
+                        paintBlock(x, y, Constants.BORDER, Constants.WEIGHT);
+                        CellGrid[x][y].state = CellState.WEIGHT;
+                    }
+                    else {
                         paintBlock(x, y, Constants.BORDER, Constants.UNVISITED);
                         CellGrid[x][y].state = CellState.UNVISITED;
                     }
                 }
             }
+
+
         });
 
         CellGrid[x][y].state = CellState.UNVISITED; //default
@@ -131,25 +161,36 @@ public class Controller implements Initializable {
     }
 
     public synchronized static void paintBlock(int x, int y, String border, String background) {
-        BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-color: " + background + ";");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-color: " + background + ";");
+                //initTimeline(BorderGrid[x][y]).play();
+                new BounceIn(BorderGrid[x][y],1,true).play();
+            }
+        });
     }
 
 
-    private void redrawGrid() {
+    private void clearGrid() {
         for (int x = 0; x < Constants.ROW; x++) {
             for (int y = 0; y < Constants.COL; y++) {
 
                 CellGrid[x][y].setParent(-1, -1); // Set parent to null
 
                 // Remove Everything except the walls
-                if (CellGrid[x][y].state != CellState.WALL) {
+                if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].state != CellState.WEIGHT) {
                     paintBlock(x, y, Constants.BORDER, Constants.UNVISITED);
                     CellGrid[x][y].state = CellState.UNVISITED;
-
                     CellGrid[x][y].weight = Constants.UNVISITED_WEIGHT;
-                } else {
+                } else if (CellGrid[x][y].state == CellState.WALL) {
                     CellGrid[x][y].weight = Constants.WALL_WEIGHT;
                 }
+                else {
+                    CellGrid[x][y].weight = Constants.WEIGHT_WEIGHT;
+                }
+                if(CellGrid[x][y].weighted)
+                    paintBlock(CellGrid[x][y].x, CellGrid[x][y].y, Constants.BORDER, Constants.WEIGHT);
             }
         }
 
@@ -165,6 +206,7 @@ public class Controller implements Initializable {
         stopButton.setDisable(logic);
         pauseButton.setDisable(logic);
         sourceButton.setDisable(!logic);
+        weightButton.setDisable(!logic);
         targetButton.setDisable(!logic);
         wallButton.setDisable(!logic);
         unvisitedButton.setDisable(!logic);
@@ -197,6 +239,14 @@ public class Controller implements Initializable {
     }
 
     @FXML
+
+    public void weightBtnEvent(ActionEvent actionEvent) {
+            currentState = CellState.WEIGHT;
+            applyColor = false;
+    }
+
+
+    @FXML
     public void startBtnEvent(ActionEvent actionEvent) {
         // Disable all button, disable draw mode
         applyColor = false;
@@ -204,7 +254,7 @@ public class Controller implements Initializable {
 
         if (Constants.currentThread == null && currentST[0][0] != -1 && currentST[1][0] != -1 && selectedAlgo != -1) {
             Algorithm algorithm = null;
-            redrawGrid();
+            clearGrid();
 
             switch (selectedAlgo) {
                 case 0:
@@ -222,7 +272,7 @@ public class Controller implements Initializable {
             algorithm.initialize(CellGrid[currentST[0][0]][currentST[0][1]], CellGrid[currentST[1][0]][currentST[1][1]]);
             algorithm.start();
 
-
+            weightButton.setDisable(true);
         }
     }
 
@@ -231,6 +281,7 @@ public class Controller implements Initializable {
         for (int i = 0; i < Constants.ROW; i++) {
             for (int j = 0; j < Constants.COL; j++) {
                 CellGrid[i][j].state = CellState.UNVISITED;
+                CellGrid[i][j].weighted = false;
                 paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
             }
         }
@@ -241,7 +292,7 @@ public class Controller implements Initializable {
     public void clearPathBtnEvent(ActionEvent actionEvent) {
         for (int i = 0; i < Constants.ROW; i++) {
             for (int j = 0; j < Constants.COL; j++) {
-                if (CellGrid[i][j].state != CellState.WALL && CellGrid[i][j].state != CellState.SOURCE && CellGrid[i][j].state != CellState.TARGET) {
+                if (CellGrid[i][j].state != CellState.WALL && CellGrid[i][j].state != CellState.WEIGHT && CellGrid[i][j].state != CellState.SOURCE && CellGrid[i][j].state != CellState.TARGET) {
                     CellGrid[i][j].state = CellState.UNVISITED;
                     paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
                 }
@@ -258,21 +309,11 @@ public class Controller implements Initializable {
     public void stopBtnEvent(ActionEvent actionEvent) {
         try {
             if (Constants.currentThread != null)
-            {
                 Constants.currentThread.killThread();
-                Constants.currentThread = null;
-            }
 
             applyColor = false;
-
-            for (int i = 0; i < Constants.ROW; i++) {
-                for (int j = 0; j < Constants.COL; j++) {
-                    if (CellGrid[i][j].state != CellState.WALL && CellGrid[i][j].state != CellState.SOURCE && CellGrid[i][j].state != CellState.TARGET) {
-                        CellGrid[i][j].state = CellState.UNVISITED;
-                        paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
-                    }
-                }
-            }
+            clearGrid();
+            Constants.isPause = false;
             toggleButton(true);
         } catch (Exception e) {
             System.out.println("Error when stopping");
