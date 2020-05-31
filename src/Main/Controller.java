@@ -226,6 +226,7 @@ public class Controller implements Initializable {
             // Disable all button, disable draw mode
             applyColor = false;
             toggleButton(false);
+            currentState = null;
             Algorithm algorithm = null;
             clearGrid();
 
