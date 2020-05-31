@@ -16,7 +16,7 @@ public class Cell {
         this.x = x;
         this.y = y;
         state = CellState.UNVISITED;
-        this.distance = 999999999;
+        this.distance = Integer.MAX_VALUE;
         //this.update = true;
         this.weighted = false;
     }

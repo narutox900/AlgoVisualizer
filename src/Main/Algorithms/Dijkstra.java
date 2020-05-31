@@ -82,8 +82,6 @@ public class Dijkstra extends Algorithm {
         x2 = nextNode.x;
         y1 = currNode.y;
         y2 = nextNode.y;
-        //distanceAndDir retval;
-        //System.out.println(currNode.direction);
 
         if( x2 < x1) {
             if(currNode.direction == "up")
@@ -179,16 +177,8 @@ public class Dijkstra extends Algorithm {
             }
         }
 
-
-
-
-
-        //getDistance(currNode, nextNode, dis_and_dir);
-
-
-
         if(currNode == source)
-            nextNode.distance = 999999999;
+            nextNode.distance = Integer.MAX_VALUE;
         int distanceToCompare = currNode.distance + distance;
 
         if (distanceToCompare < nextNode.distance) {
@@ -222,7 +212,7 @@ public class Dijkstra extends Algorithm {
                 {
                     current = queue.poll();
                     Cell min_dis_cell = null;
-                    int min_dis = 9999999;
+                    int min_dis = Integer.MAX_VALUE;
                     if (current.state != CellState.SOURCE)
                     {
                         if(current.weighted)
@@ -252,16 +242,10 @@ public class Dijkstra extends Algorithm {
 
                                     // Update distance based on weighted cell.
 
-                                    //tmp.weight = current.weight + 1;
-                                    //tmp.setParent(current.x, current.y);
-
-                                    //tmp = updateNode(current, tmp);
                                     if (min_dis > tmp.distance) {
                                         min_dis = tmp.distance;
                                         min_dis_cell = tmp;
-
                                     }
-
 
                                     if (tmp.state != CellState.TARGET)
                                     {
@@ -276,8 +260,6 @@ public class Dijkstra extends Algorithm {
                                         pathFound = true;
                                         break;
                                     }
-                                    //if(tmp.state != CellState.WEIGHT)
-                                        //Controller.CellGrid[tmp.x][tmp.y].state = CellState.VISITED;
 
                                     Controller.CellGrid[tmp.x][tmp.y].state = CellState.VISITED;
                                     queue.add(tmp);
@@ -285,8 +267,6 @@ public class Dijkstra extends Algorithm {
                             }
                         }
                     }
-
-
                 }
                 else
                     Thread.sleep(Constants.THREAD_PAUSE_TIME);

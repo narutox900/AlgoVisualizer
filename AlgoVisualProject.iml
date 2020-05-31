@@ -8,7 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="controlsfx, jfoenix" level="project" />
-    <orderEntry type="library" name="SceneBuilder-11.0.0" level="project" />
-    <orderEntry type="library" name="javafx-swt" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
