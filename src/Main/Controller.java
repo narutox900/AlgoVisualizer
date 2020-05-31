@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -59,6 +60,12 @@ public class Controller implements Initializable {
                 constructCell(x, y);
             }
         }
+
+        clearButton.setAlignment(Pos.CENTER_LEFT);
+        clearPathButton.setAlignment(Pos.CENTER_LEFT);
+        startButton.setAlignment(Pos.CENTER_LEFT);
+        stopButton.setAlignment(Pos.CENTER_LEFT);
+        pauseButton.setAlignment(Pos.CENTER_LEFT);
 
         for (int i = 0; i < 2; i++) currentST[i][0] = -1;
 
@@ -182,14 +189,14 @@ public class Controller implements Initializable {
                 CellGrid[x][y].setParent(-1, -1); // Set parent to null
 
                 // Remove Everything except the walls
-                if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].state != CellState.WEIGHT) {
+                if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].state != CellState.WEIGHT )  {
                     paintBlock(x, y, Constants.BORDER, Constants.UNVISITED);
                     CellGrid[x][y].state = CellState.UNVISITED;
                     CellGrid[x][y].weight = Constants.UNVISITED_WEIGHT;
                 } else if (CellGrid[x][y].state == CellState.WALL) {
                     CellGrid[x][y].weight = Constants.WALL_WEIGHT;
                 }
-                else {
+                else if (CellGrid[x][y].state == CellState.WEIGHT){
                     CellGrid[x][y].weight = Constants.WEIGHT_WEIGHT;
                 }
                 if(CellGrid[x][y].weighted)
