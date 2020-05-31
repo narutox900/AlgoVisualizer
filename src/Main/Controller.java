@@ -3,6 +3,7 @@ package Main;
 import Main.Algorithms.Algorithm;
 import Main.Algorithms.BreadthFirst;
 import Main.Algorithms.DepthFirst;
+import Main.Algorithms.Dijkstra;
 import Main.GraphRelated.Cell;
 import Main.GraphRelated.CellState;
 import com.jfoenix.controls.JFXButton;
@@ -213,6 +214,7 @@ public class Controller implements Initializable {
                     algorithm = new DepthFirst();
                     break;
                 case 2:
+                    algorithm = new Dijkstra();
                     break;
             }
 

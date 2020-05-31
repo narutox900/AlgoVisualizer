@@ -1,8 +1,13 @@
 package Main.GraphRelated;
 
+import com.jfoenix.validation.IntegerValidator;
+
 public class Cell {
     public int x, y, weight;
+    public int distance;
     public int parent_x, parent_y;
+    public String direction;
+    public boolean update;
 
     public CellState state;
 
@@ -11,6 +16,8 @@ public class Cell {
         this.x = x;
         this.y = y;
         state = CellState.UNVISITED;
+        this.distance = 999999999;
+        this.update = true;
     }
 
     public void setParent(int x, int y)
