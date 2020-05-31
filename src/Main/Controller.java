@@ -7,22 +7,27 @@ import Main.Animation.BounceIn;
 import Main.GraphRelated.Cell;
 import Main.GraphRelated.CellState;
 import com.jfoenix.controls.JFXButton;
+import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.event.ActionEvent;
 import Main.Configurations.Constants;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     @FXML
     private ComboBox<String> algoOptions;
+    @FXML
+    private Pane gridContainer;
     @FXML
     private GridPane platform;
     @FXML
@@ -54,6 +59,14 @@ public class Controller implements Initializable {
         selectedAlgo = -1; //initially no algorithm is selected.
         currentState = null;
         applyColor = false;
+        gridInit();
+    }
+
+
+
+    private void gridInit()
+    {
+        System.out.println(gridContainer.prefWidth(-1));
     }
 
     private void constructCell(int x, int y) {
@@ -131,12 +144,18 @@ public class Controller implements Initializable {
     }
 
     public synchronized static void paintBlock(int x, int y, String border, String background) {
-        BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-color: " + background + ";");
-        new BounceIn(BorderGrid[x][y]).play();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-color: " + background + ";");
+                //initTimeline(BorderGrid[x][y]).play();
+                new BounceIn(BorderGrid[x][y],1,true).play();
+            }
+        });
     }
 
 
-    private void redrawGrid() {
+    private void clearGrid() {
         for (int x = 0; x < Constants.ROW; x++) {
             for (int y = 0; y < Constants.COL; y++) {
 
@@ -205,7 +224,7 @@ public class Controller implements Initializable {
 
         if (Constants.currentThread == null && currentST[0][0] != -1 && currentST[1][0] != -1 && selectedAlgo != -1) {
             Algorithm algorithm = null;
-            redrawGrid();
+            clearGrid();
 
             switch (selectedAlgo) {
                 case 0:
@@ -259,7 +278,7 @@ public class Controller implements Initializable {
                 Constants.currentThread.killThread();
 
             applyColor = false;
-            redrawGrid();
+            clearGrid();
             Constants.isPause = false;
             toggleButton(true);
         } catch (Exception e) {
