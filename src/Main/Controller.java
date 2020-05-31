@@ -222,7 +222,6 @@ public class Controller implements Initializable {
     @FXML
     public void startBtnEvent(ActionEvent actionEvent) {
 
-
         if (Constants.currentThread == null && currentST[0][0] != -1 && currentST[1][0] != -1 && selectedAlgo != -1) {
             // Disable all button, disable draw mode
             applyColor = false;
