@@ -5,69 +5,61 @@ import Main.Controller;
 import Main.GraphRelated.Cell;
 import Main.GraphRelated.CellState;
 
-import java.text.Collator;
-import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class Dijkstra extends Algorithm {
 
-    public distanceAndDir getDistance(Cell currNode, Cell nextNode) {
+    public DistanceAndDirection getDistance(Cell currNode, Cell nextNode) {
 
         int x1, x2, y1, y2;
         x1 = currNode.x;
         x2 = nextNode.x;
         y1 = currNode.y;
         y2 = nextNode.y;
-        //distanceAndDir retval;
 
         if( x2 < x1) {
             if(currNode.direction == "up")
 
-                return new distanceAndDir(1, "up");
+                return new DistanceAndDirection(1, "up");
             else if (currNode.direction == "right")
-                return new distanceAndDir(2, "up");
+                return new DistanceAndDirection(2, "up");
             else if (currNode.direction == "left")
-                return new distanceAndDir(2, "up");
+                return new DistanceAndDirection(2, "up");
             else if (currNode.direction =="down")
-                return new distanceAndDir(3, "up");
+                return new DistanceAndDirection(3, "up");
         }
         else if( x2 > x1)
         {
             if(currNode.direction == "up")
-                return  new distanceAndDir(3, "down");
+                return  new DistanceAndDirection(3, "down");
             else if (currNode.direction == "right")
-                return new distanceAndDir(2, "down");
+                return new DistanceAndDirection(2, "down");
             else if (currNode.direction == "left")
-                return new distanceAndDir(2, "down");
+                return new DistanceAndDirection(2, "down");
             else if (currNode.direction =="down")
-                return new distanceAndDir(1, "down");
+                return new DistanceAndDirection(1, "down");
         }
 
         if(y2 < y1) {
             if(currNode.direction == "up")
-                return  new distanceAndDir(2, "left");
+                return  new DistanceAndDirection(2, "left");
             else if (currNode.direction == "right")
-            {
-                //System.out.println("+1");
-                return new distanceAndDir(1, "left");
-            }
-
+                return new DistanceAndDirection(1, "left");
             else if (currNode.direction == "left")
-                return new distanceAndDir(3, "left");
+                return new DistanceAndDirection(3, "left");
             else if (currNode.direction =="down")
-                return new distanceAndDir(2, "left");
+                return new DistanceAndDirection(2, "left");
         }
 
         else if( y2 > y1) {
             if(currNode.direction == "up")
-                return  new distanceAndDir(2, "right");
+                return  new DistanceAndDirection(2, "right");
             else if (currNode.direction == "right")
-                return new distanceAndDir(1, "right");
+                return new DistanceAndDirection(1, "right");
             else if (currNode.direction == "left")
-                return new distanceAndDir(3, "right");
+                return new DistanceAndDirection(3, "right");
             else if (currNode.direction =="down")
-                return new distanceAndDir(2, "right");
+                return new DistanceAndDirection(2, "right");
         }
         return null;
 
@@ -226,7 +218,7 @@ public class Dijkstra extends Algorithm {
 
                                 if (tmp.state == CellState.WEIGHT)
                                 {
-                                    tmp.distance = current.distance + 5;
+                                    tmp.distance = current.distance + Constants.ADDITIONAL_WEIGHT;
                                     tmp.parent_x = current.x;
                                     tmp.parent_y = current.y;
                                     tmp.direction = current.direction;

@@ -26,6 +26,7 @@ public class Constants
     public static final int NUM_OF_NEIGHBORS = 4;
     public static final int UNVISITED_WEIGHT = Integer.MAX_VALUE;
     public static final int WALL_WEIGHT = -1;
+    public static final int ADDITIONAL_WEIGHT = 5;
     public static final int WEIGHT_WEIGHT = -1;
 
     public static Algorithm currentThread = null;
