@@ -9,61 +9,7 @@ import java.util.LinkedList;
 
 public class Dijkstra extends Algorithm {
 
-    public DistanceAndDirection getDistance(Cell currNode, Cell nextNode) {
 
-        int x1, x2, y1, y2;
-        x1 = currNode.x;
-        x2 = nextNode.x;
-        y1 = currNode.y;
-        y2 = nextNode.y;
-
-        if( x2 < x1) {
-            if(currNode.direction == "up")
-
-                return new DistanceAndDirection(1, "up");
-            else if (currNode.direction == "right")
-                return new DistanceAndDirection(2, "up");
-            else if (currNode.direction == "left")
-                return new DistanceAndDirection(2, "up");
-            else if (currNode.direction =="down")
-                return new DistanceAndDirection(3, "up");
-        }
-        else if( x2 > x1)
-        {
-            if(currNode.direction == "up")
-                return  new DistanceAndDirection(3, "down");
-            else if (currNode.direction == "right")
-                return new DistanceAndDirection(2, "down");
-            else if (currNode.direction == "left")
-                return new DistanceAndDirection(2, "down");
-            else if (currNode.direction =="down")
-                return new DistanceAndDirection(1, "down");
-        }
-
-        if(y2 < y1) {
-            if(currNode.direction == "up")
-                return  new DistanceAndDirection(2, "left");
-            else if (currNode.direction == "right")
-                return new DistanceAndDirection(1, "left");
-            else if (currNode.direction == "left")
-                return new DistanceAndDirection(3, "left");
-            else if (currNode.direction =="down")
-                return new DistanceAndDirection(2, "left");
-        }
-
-        else if( y2 > y1) {
-            if(currNode.direction == "up")
-                return  new DistanceAndDirection(2, "right");
-            else if (currNode.direction == "right")
-                return new DistanceAndDirection(1, "right");
-            else if (currNode.direction == "left")
-                return new DistanceAndDirection(3, "right");
-            else if (currNode.direction =="down")
-                return new DistanceAndDirection(2, "right");
-        }
-        return null;
-
-    }
     public Cell updateNode(Cell currNode, Cell nextNode) {
 
 
@@ -203,7 +149,11 @@ public class Dijkstra extends Algorithm {
                     if (current.state != CellState.SOURCE)
                     {
                         if(current.weighted)
+                        {
                             Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.WEIGHT);
+                            current.distance += 5;
+                        }
+
                         else
                             Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.VISITED);
                     }
@@ -215,7 +165,7 @@ public class Dijkstra extends Algorithm {
 
                             tmp = Controller.CellGrid[current.x + X[i]][current.y + Y[i]];
                             if (tmp.state != CellState.WALL) {
-
+                                /*
                                 if (tmp.state == CellState.WEIGHT)
                                 {
                                     tmp.distance = current.distance + Constants.ADDITIONAL_WEIGHT;
@@ -224,9 +174,13 @@ public class Dijkstra extends Algorithm {
                                     tmp.direction = current.direction;
                                 }
                                 else
+
+                                 */
                                 tmp = updateNode(current, tmp);
 
-                                if (tmp.state == CellState.TARGET || tmp.state == CellState.UNVISITED || tmp.state == CellState.WEIGHT) {
+                                if (tmp.state == CellState.TARGET || tmp.state == CellState.UNVISITED
+                                        || tmp.state == CellState.WEIGHT)
+                                {
 
                                     if (tmp.state != CellState.TARGET)
                                     {
@@ -237,6 +191,18 @@ public class Dijkstra extends Algorithm {
 
                                     else {
                                         //System.out.println("tracing...");
+                                        Cell tmp_parent;
+                                        int min_dist = 999999;
+                                        for (int j = 0; j < Constants.NUM_OF_NEIGHBORS && !pathFound; j++) {
+                                            if (inRange(tmp.x + X[j], tmp.y + Y[j])) {
+                                                tmp_parent = Controller.CellGrid[tmp.x + X[j]][tmp.y + Y[j]];
+                                                if(tmp_parent.distance < min_dist) {
+                                                    min_dist = tmp_parent.distance;
+                                                    tmp.parent_x = tmp_parent.x;
+                                                    tmp.parent_y = tmp_parent.y;
+                                                }
+                                            }
+                                        }
                                         tracePath(tmp);
                                         //shortestPath = tmp.distance;
                                         pathFound = true;

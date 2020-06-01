@@ -309,9 +309,11 @@ public class Controller implements Initializable {
 
             switch (selectedAlgo) {
                 case 0:
+                    clearWeight();
                     algorithm = new BreadthFirst();
                     break;
                 case 1:
+                    clearWeight();
                     algorithm = new DepthFirst();
                     break;
                 case 2:
@@ -326,6 +328,19 @@ public class Controller implements Initializable {
         }
     }
 
+    public void clearWeight() {
+        for (int i = 0; i < Constants.ROW; i++) {
+            for (int j = 0; j < Constants.COL; j++) {
+                if(CellGrid[i][j].weighted)
+                {
+                    CellGrid[i][j].weighted = false;
+                    CellGrid[i][j].distance = Integer.MAX_VALUE;
+                    paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
+                }
+
+            }
+        }
+    }
     @FXML
     public void clearBtnEvent(ActionEvent actionEvent) {
         for (int i = 0; i < Constants.ROW; i++) {
