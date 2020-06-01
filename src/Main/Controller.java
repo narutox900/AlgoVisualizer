@@ -230,7 +230,7 @@ public class Controller implements Initializable {
                 CellGrid[x][y].setParent(-1, -1); // Set parent to null
                 CellGrid[x][y].distance = Integer.MAX_VALUE;
                 // Remove Everything except the walls
-                if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].weighted != true) {
+                if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].state != CellState.WALL) {
                     paintBlock(x, y, Constants.BORDER, Constants.UNVISITED);
                     CellGrid[x][y].state = CellState.UNVISITED;
                     CellGrid[x][y].weight = Constants.UNVISITED_WEIGHT;
@@ -305,7 +305,7 @@ public class Controller implements Initializable {
             toggleButton(false);
             currentState = null;
             Algorithm algorithm = null;
-            //clearGrid();
+            clearGrid();
 
             switch (selectedAlgo) {
                 case 0:
