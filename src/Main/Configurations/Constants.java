@@ -6,7 +6,7 @@ import Main.Algorithms.Algorithm;
 public class Constants
 {
     // Design preference
-    public static final int ROW = 25, COL = 40;
+    public static final int ROW = 30, COL = 40;
 
     //Colors
     public static final String BORDER = "black";

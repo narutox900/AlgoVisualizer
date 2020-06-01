@@ -12,15 +12,15 @@ import Main.GraphRelated.Cell;
 import Main.GraphRelated.CellState;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.event.ActionEvent;
 import Main.Configurations.Constants;
-import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,7 +29,7 @@ public class Controller implements Initializable {
     @FXML
     private ComboBox<String> algoOptions;
     @FXML
-    private Pane gridContainer;
+    private AnchorPane gridContainer;
     @FXML
     private GridPane platform;
     @FXML
@@ -54,6 +54,8 @@ public class Controller implements Initializable {
             startButton.setDisable(false);
         });
 
+        gridInit();
+
         for (int x = 0; x < Constants.ROW; x++) {
             for (int y = 0; y < Constants.COL; y++) {
                 CellGrid[x][y] = new Cell(x, y);
@@ -72,14 +74,47 @@ public class Controller implements Initializable {
         selectedAlgo = -1; //initially no algorithm is selected.
         currentState = null;
         applyColor = false;
-        gridInit();
+
+        ChangeListener<Number> changeListener = (observable, oldVal, newVal) -> gridUpdate();
+
+        gridContainer.heightProperty().addListener(changeListener);
+        gridContainer.widthProperty().addListener(changeListener);
     }
 
-
-
-    private void gridInit()
+    public void gridUpdate()
     {
-        System.out.println(gridContainer.prefWidth(-1));
+        double containerWidth = gridContainer.getWidth();
+        double containerHeight = gridContainer.getHeight();
+
+        double gridCellWidth = containerWidth / Constants.COL;
+        double gridCellHeight = containerHeight / Constants.ROW;
+
+        double gridCellSize = Math.min(gridCellWidth, gridCellHeight);
+
+        double gridWidth = gridCellSize * Constants.COL;
+        double gridHeight = gridCellSize * Constants.ROW;
+
+        double marginTopBottom = (containerHeight - gridHeight) / 2;
+        double marginLeftRight = (containerWidth - gridWidth) / 2;
+
+//        AnchorPane.setRightAnchor(platform, anchorLeftRight);
+//        AnchorPane.setLeftAnchor(platform, anchorLeftRight);
+//        AnchorPane.setTopAnchor(platform, anchorTopBottom);
+//        AnchorPane.setBottomAnchor(platform, anchorTopBottom);
+
+        platform.setPadding(new Insets(marginTopBottom, marginLeftRight, marginTopBottom, marginLeftRight));
+    }
+
+    public void gridInit()
+    {
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setPercentHeight(100.0/Constants.ROW);
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        columnConstraints.setPercentWidth(100.0/Constants.COL);
+        for (int i = 0; i < Constants.ROW; i ++)
+            platform.getRowConstraints().add(rowConstraints);
+        for (int i = 0; i < Constants.COL; i ++)
+            platform.getColumnConstraints().add(columnConstraints);
     }
 
     private void constructCell(int x, int y) {
