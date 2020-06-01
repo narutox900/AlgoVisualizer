@@ -95,7 +95,7 @@
                   <Font size="15.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="39.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="40.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Icons/path.png" />
                      </image>
