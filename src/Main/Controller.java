@@ -46,7 +46,6 @@ public class Controller implements Initializable {
     private boolean applyColor;
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         algoOptions.getItems().addAll("Breadth First Search", "Depth First Search", "Dijkstra Algorithm");
@@ -69,6 +68,8 @@ public class Controller implements Initializable {
         startButton.setAlignment(Pos.CENTER_LEFT);
         stopButton.setAlignment(Pos.CENTER_LEFT);
         pauseButton.setAlignment(Pos.CENTER_LEFT);
+        wallButton.setAlignment(Pos.CENTER_LEFT);
+        weightButton.setAlignment(Pos.CENTER_LEFT);
 
         for (int i = 0; i < 2; i++) currentST[i][0] = -1;
 
@@ -208,9 +209,9 @@ public class Controller implements Initializable {
             @Override
             public void run() {
                 if (background == Constants.SOURCE || background == Constants.TARGET)
-                    BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-image: url('" +  background  + "')"+ ";" +
-                            "-fx-background-position: center center; " +
-                            "-fx-background-size: cover" );
+                    BorderGrid[x][y].setStyle("-fx-border-color: " +  border +  "; -fx-background-image: url('" + background + "')" + ";" +
+                            "-fx-background-position: center center; "  +
+                            "-fx-background-size: cover");
 
                 else
                     BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-color: " + background + ";");
