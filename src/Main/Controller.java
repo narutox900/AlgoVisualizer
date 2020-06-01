@@ -45,7 +45,6 @@ public class Controller implements Initializable {
     private boolean applyColor;
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         algoOptions.getItems().addAll("Breadth First Search", "Depth First Search", "Dijkstra Algorithm");
@@ -68,6 +67,8 @@ public class Controller implements Initializable {
         startButton.setAlignment(Pos.CENTER_LEFT);
         stopButton.setAlignment(Pos.CENTER_LEFT);
         pauseButton.setAlignment(Pos.CENTER_LEFT);
+        wallButton.setAlignment(Pos.CENTER_LEFT);
+        weightButton.setAlignment(Pos.CENTER_LEFT);
 
         for (int i = 0; i < 2; i++) currentST[i][0] = -1;
 

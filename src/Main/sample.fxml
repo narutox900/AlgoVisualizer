@@ -6,28 +6,27 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.AnchorPane?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="491.0" prefWidth="718.0" scaleShape="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Controller">
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="371.0" prefWidth="154.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="391.0" prefWidth="160.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXComboBox fx:id="algoOptions" focusColor="#be56e1" promptText="Select algorithms">
+            <JFXComboBox fx:id="algoOptions" focusColor="#ffd2bf" prefHeight="26.0" prefWidth="160.0" promptText="          Select algorithms" style="-fx-text-alignment: ct;" unFocusColor="#96dfde">
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets top="30.0" />
                </VBox.margin>
                
             </JFXComboBox>
-            <JFXButton fx:id="startButton" disable="true" onAction="#startBtnEvent" prefHeight="35.0" prefWidth="152.0" text="Start">
+            <JFXButton fx:id="startButton" disable="true" onAction="#startBtnEvent" prefHeight="35.0" prefWidth="160.0" text="Start">
                <VBox.margin>
-                  <Insets top="40.0" />
+                  <Insets top="60.0" />
                </VBox.margin>
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
@@ -37,7 +36,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="clearButton" layoutX="56.0" layoutY="114.0" onAction="#clearBtnEvent" prefHeight="26.0" prefWidth="206.0" text="Clear Board">
+            <JFXButton fx:id="clearButton" layoutX="56.0" layoutY="114.0" onAction="#clearBtnEvent" prefHeight="35.0" prefWidth="160.0" text="Clear Board">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
@@ -49,7 +48,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="clearPathButton" layoutX="56.0" layoutY="140.0" onAction="#clearPathBtnEvent" prefHeight="26.0" prefWidth="166.0" text="Clear Path">
+            <JFXButton fx:id="clearPathButton" layoutX="56.0" layoutY="140.0" onAction="#clearPathBtnEvent" prefHeight="35.0" prefWidth="160.0" text="Clear Path">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
@@ -61,7 +60,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="pauseButton" disable="true" layoutX="56.0" layoutY="165.0" onAction="#pauseBtnEvent" prefHeight="35.0" prefWidth="152.0" text="Pause/Resume">
+            <JFXButton fx:id="pauseButton" disable="true" layoutX="56.0" layoutY="165.0" onAction="#pauseBtnEvent" prefHeight="35.0" prefWidth="160.0" text="Pause/Resume">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
@@ -73,7 +72,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="stopButton" disable="true" onAction="#stopBtnEvent" prefHeight="35.0" prefWidth="150.0" text="Stop">
+            <JFXButton fx:id="stopButton" disable="true" onAction="#stopBtnEvent" prefHeight="35.0" prefWidth="160.0" text="Stop">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
@@ -91,24 +90,42 @@
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" prefHeight="106.0" prefWidth="154.0" style="-fx-background-color: #bf91d9;" text="Algorithms Visualizer" />
+            <Label alignment="CENTER" prefHeight="106.0" prefWidth="160.0" text="Algorithms&#10;Visualizer">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/path.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Label>
             <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="128.0">
                <children>
                   <JFXButton fx:id="sourceButton" alignment="CENTER" onAction="#sourceBtnEvent" prefHeight="34.0" prefWidth="121.0" text="Source Node">
                      <graphic>
-                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #501b1d;" />
+                        <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/source.png" />
+                           </image>
+                        </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="targetButton" onAction="#targetBtnEvent" prefHeight="34.0" prefWidth="118.0" text="Destination">
+                  <JFXButton fx:id="targetButton" onAction="#targetBtnEvent" prefHeight="35.0" prefWidth="114.0" text="Destination">
                      <graphic>
-                        <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #565d47;" />
+                        <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/target.png" />
+                           </image>
+                        </ImageView>
                      </graphic>
                   </JFXButton>
                </children>
             </VBox>
             <VBox alignment="CENTER" layoutX="164.0" layoutY="10.0" prefHeight="100.0" prefWidth="128.0">
                <children>
-                  <JFXButton fx:id="wallButton" onAction="#wallBtnEvent" prefHeight="34.0" prefWidth="132.0" text="Wall">
+                  <JFXButton fx:id="wallButton" onAction="#wallBtnEvent" prefHeight="34.0" prefWidth="145.0" text="Wall">
                      <graphic>
                         <Pane prefHeight="18.0" prefWidth="17.0" style="-fx-background-color: #202040;" />
                      </graphic>
@@ -160,9 +177,7 @@
    <center>
       <AnchorPane fx:id="gridContainer" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
          <children>
-            <GridPane fx:id="platform" gridLinesVisible="true" minHeight="-Infinity" minWidth="-Infinity"
-                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                      AnchorPane.topAnchor="0.0">
+            <GridPane fx:id="platform" gridLinesVisible="true" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <!--
                <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -235,7 +250,7 @@
                      </rowConstraints>
                      -->
                <padding>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
             </GridPane>
          </children>

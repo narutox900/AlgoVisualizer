@@ -13,8 +13,8 @@ public class Constants
     public static final String BORDER = "black";
     public static final String WALL = "#202040";
     public static final String UNVISITED = "#fffff0";
-    public static final String SOURCE = "#501B1D" ;// "#BC658D";
-    public static final String TARGET = "#565d47"; //"#ff6363";
+    public static final String SOURCE =   "/Icons/source.png";
+    public static final String TARGET =  "/Icons/target.png";
     public static final String VISITED = "f96d80"; // "#fbcffc";
     public static final String NEXT_VISIT = "#fab7b7"; //"ff9a76"; //"#b4de87";
     public static final String SHORTEST = "#f1f5a2";
