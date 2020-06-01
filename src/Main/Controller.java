@@ -145,6 +145,7 @@ public class Controller implements Initializable {
                 if (CellGrid[x][y].state != CellState.SOURCE && CellGrid[x][y].state != CellState.TARGET && applyColor) {
                     tmpPane.setStyle("-fx-border-color: " + Constants.BORDER + "; -fx-background-color: " + Constants.UNVISITED + ";");
                     CellGrid[x][y].state = CellState.UNVISITED;
+                    CellGrid[x][y].weighted = false;
                 }
             }
         });
@@ -202,6 +203,7 @@ public class Controller implements Initializable {
         if (currentST[row][0] != -1) {
             paintBlock(currentST[row][0], currentST[row][1], Constants.BORDER, Constants.UNVISITED);
             CellGrid[currentST[row][0]][currentST[row][1]].state = CellState.UNVISITED;
+            CellGrid[currentST[row][0]][currentST[row][1]].weight = Constants.UNVISITED_WEIGHT;
         }
     }
 
@@ -222,9 +224,9 @@ public class Controller implements Initializable {
             for (int y = 0; y < Constants.COL; y++) {
 
                 CellGrid[x][y].setParent(-1, -1); // Set parent to null
-                CellGrid[x][y].distance = 99999999;
+                CellGrid[x][y].distance = Integer.MAX_VALUE;
                 // Remove Everything except the walls
-                if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].state != CellState.WEIGHT )  {
+                if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].weighted != true)  {
                     paintBlock(x, y, Constants.BORDER, Constants.UNVISITED);
                     CellGrid[x][y].state = CellState.UNVISITED;
                     CellGrid[x][y].weight = Constants.UNVISITED_WEIGHT;
@@ -300,7 +302,7 @@ public class Controller implements Initializable {
             toggleButton(false);
             currentState = null;
             Algorithm algorithm = null;
-            clearGrid();
+            //clearGrid();
 
             switch (selectedAlgo) {
                 case 0:
@@ -318,7 +320,6 @@ public class Controller implements Initializable {
             algorithm.initialize(CellGrid[currentST[0][0]][currentST[0][1]], CellGrid[currentST[1][0]][currentST[1][1]]);
             algorithm.start();
 
-            weightButton.setDisable(true);
         }
     }
 
@@ -328,7 +329,7 @@ public class Controller implements Initializable {
             for (int j = 0; j < Constants.COL; j++) {
                 CellGrid[i][j].state = CellState.UNVISITED;
                 CellGrid[i][j].weighted = false;
-                CellGrid[i][j].distance = 99999999;
+                CellGrid[i][j].distance = Integer.MAX_VALUE;
                 paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
             }
         }
@@ -342,7 +343,7 @@ public class Controller implements Initializable {
                 if (CellGrid[i][j].state != CellState.WALL && CellGrid[i][j].state != CellState.WEIGHT && CellGrid[i][j].state != CellState.SOURCE && CellGrid[i][j].state != CellState.TARGET) {
                     CellGrid[i][j].state = CellState.UNVISITED;
                     paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
-                    CellGrid[i][j].distance = 99999999;
+                    CellGrid[i][j].distance = Integer.MAX_VALUE;
                 }
             }
         }
