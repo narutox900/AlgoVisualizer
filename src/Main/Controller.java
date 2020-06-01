@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.event.ActionEvent;
 import Main.Configurations.Constants;
@@ -81,8 +82,7 @@ public class Controller implements Initializable {
         gridContainer.widthProperty().addListener(changeListener);
     }
 
-    public void gridUpdate()
-    {
+    public void gridUpdate() {
         double containerWidth = gridContainer.getWidth();
         double containerHeight = gridContainer.getHeight();
 
@@ -105,15 +105,14 @@ public class Controller implements Initializable {
         platform.setPadding(new Insets(marginTopBottom, marginLeftRight, marginTopBottom, marginLeftRight));
     }
 
-    public void gridInit()
-    {
+    public void gridInit() {
         RowConstraints rowConstraints = new RowConstraints();
-        rowConstraints.setPercentHeight(100.0/Constants.ROW);
+        rowConstraints.setPercentHeight(100.0 / Constants.ROW);
         ColumnConstraints columnConstraints = new ColumnConstraints();
-        columnConstraints.setPercentWidth(100.0/Constants.COL);
-        for (int i = 0; i < Constants.ROW; i ++)
+        columnConstraints.setPercentWidth(100.0 / Constants.COL);
+        for (int i = 0; i < Constants.ROW; i++)
             platform.getRowConstraints().add(rowConstraints);
-        for (int i = 0; i < Constants.COL; i ++)
+        for (int i = 0; i < Constants.COL; i++)
             platform.getColumnConstraints().add(columnConstraints);
     }
 
@@ -183,8 +182,7 @@ public class Controller implements Initializable {
                     } else if (currentState == CellState.WEIGHT) {
                         paintBlock(x, y, Constants.BORDER, Constants.WEIGHT);
                         CellGrid[x][y].state = CellState.WEIGHT;
-                    }
-                    else {
+                    } else {
                         paintBlock(x, y, Constants.BORDER, Constants.UNVISITED);
                         CellGrid[x][y].state = CellState.UNVISITED;
                     }
@@ -209,9 +207,15 @@ public class Controller implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-color: " + background + ";");
-                //initTimeline(BorderGrid[x][y]).play();
-                new BounceIn(BorderGrid[x][y],1,true).play();
+                if (background == Constants.SOURCE || background == Constants.TARGET)
+                    BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-image: url('" +  background  + "')"+ ";" +
+                            "-fx-background-position: center center; " +
+                            "-fx-background-size: cover" );
+
+                else
+                    BorderGrid[x][y].setStyle("-fx-border-color: " + border + "; -fx-background-color: " + background + ";");
+
+                new BounceIn(BorderGrid[x][y], 1, true).play();
             }
         });
     }
@@ -224,17 +228,16 @@ public class Controller implements Initializable {
                 CellGrid[x][y].setParent(-1, -1); // Set parent to null
                 CellGrid[x][y].distance = 99999999;
                 // Remove Everything except the walls
-                if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].state != CellState.WEIGHT )  {
+                if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].state != CellState.WEIGHT) {
                     paintBlock(x, y, Constants.BORDER, Constants.UNVISITED);
                     CellGrid[x][y].state = CellState.UNVISITED;
                     CellGrid[x][y].weight = Constants.UNVISITED_WEIGHT;
                 } else if (CellGrid[x][y].state == CellState.WALL) {
                     CellGrid[x][y].weight = Constants.WALL_WEIGHT;
-                }
-                else if (CellGrid[x][y].state == CellState.WEIGHT){
+                } else if (CellGrid[x][y].state == CellState.WEIGHT) {
                     CellGrid[x][y].weight = Constants.WEIGHT_WEIGHT;
                 }
-                if(CellGrid[x][y].weighted)
+                if (CellGrid[x][y].weighted)
                     paintBlock(CellGrid[x][y].x, CellGrid[x][y].y, Constants.BORDER, Constants.WEIGHT);
             }
         }
@@ -246,6 +249,7 @@ public class Controller implements Initializable {
         CellGrid[currentST[0][0]][currentST[0][1]].state = CellState.SOURCE;
         CellGrid[currentST[1][0]][currentST[1][1]].state = CellState.TARGET;
     }
+
 
     public void toggleButton(boolean logic) {
         stopButton.setDisable(logic);
@@ -286,8 +290,8 @@ public class Controller implements Initializable {
     @FXML
 
     public void weightBtnEvent(ActionEvent actionEvent) {
-            currentState = CellState.WEIGHT;
-            applyColor = false;
+        currentState = CellState.WEIGHT;
+        applyColor = false;
     }
 
 
@@ -349,7 +353,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void pauseBtnEvent(ActionEvent actionEvent)  {
+    public void pauseBtnEvent(ActionEvent actionEvent) {
         Constants.isPause = !(Constants.isPause);
     }
 
