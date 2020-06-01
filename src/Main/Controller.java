@@ -137,6 +137,7 @@ public class Controller implements Initializable {
                     tmpPane.setStyle("-fx-border-color: " + Constants.BORDER + "; -fx-background-color: " + Constants.WEIGHT + ";");
                     CellGrid[x][y].state = CellState.WEIGHT;
                     CellGrid[x][y].weighted = true;
+                    CellGrid[x][y].count = Constants.WEIGHT_COUNT;
                 }
             }
 
@@ -145,6 +146,7 @@ public class Controller implements Initializable {
                     tmpPane.setStyle("-fx-border-color: " + Constants.BORDER + "; -fx-background-color: " + Constants.UNVISITED + ";");
                     CellGrid[x][y].state = CellState.UNVISITED;
                     CellGrid[x][y].weighted = false;
+                    CellGrid[x][y].count = 0;
                 }
             }
         });
@@ -202,6 +204,9 @@ public class Controller implements Initializable {
             paintBlock(currentST[row][0], currentST[row][1], Constants.BORDER, Constants.UNVISITED);
             CellGrid[currentST[row][0]][currentST[row][1]].state = CellState.UNVISITED;
             CellGrid[currentST[row][0]][currentST[row][1]].weight = Constants.UNVISITED_WEIGHT;
+
+            CellGrid[currentST[row][0]][currentST[row][1]].count = Constants.COUNT;
+
         }
     }
 
@@ -230,7 +235,7 @@ public class Controller implements Initializable {
                 CellGrid[x][y].setParent(-1, -1); // Set parent to null
                 CellGrid[x][y].distance = Integer.MAX_VALUE;
                 // Remove Everything except the walls
-                if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].state != CellState.WALL) {
+                if (CellGrid[x][y].state != CellState.WALL && CellGrid[x][y].state != CellState.WEIGHT) {
                     paintBlock(x, y, Constants.BORDER, Constants.UNVISITED);
                     CellGrid[x][y].state = CellState.UNVISITED;
                     CellGrid[x][y].weight = Constants.UNVISITED_WEIGHT;
@@ -238,18 +243,28 @@ public class Controller implements Initializable {
                     CellGrid[x][y].weight = Constants.WALL_WEIGHT;
                 } else if (CellGrid[x][y].state == CellState.WEIGHT) {
                     CellGrid[x][y].weight = Constants.WEIGHT_WEIGHT;
+                    CellGrid[x][y].count = Constants.WEIGHT_COUNT;
                 }
                 if (CellGrid[x][y].weighted)
                     paintBlock(CellGrid[x][y].x, CellGrid[x][y].y, Constants.BORDER, Constants.WEIGHT);
             }
         }
-
+        //resetCount();
         // repaint the source and target point
         paintBlock(currentST[0][0], currentST[0][1], Constants.BORDER, Constants.SOURCE);
         paintBlock(currentST[1][0], currentST[1][1], Constants.BORDER, Constants.TARGET);
 
         CellGrid[currentST[0][0]][currentST[0][1]].state = CellState.SOURCE;
         CellGrid[currentST[1][0]][currentST[1][1]].state = CellState.TARGET;
+    }
+
+    public void resetCount() {
+        for (int x = 0; x < Constants.ROW; x++) {
+            for (int y = 0; y < Constants.COL; y++) {
+                if (CellGrid[x][y].state == CellState.WEIGHT)
+                    CellGrid[x][y].count = Constants.WEIGHT_COUNT;
+            }
+        }
     }
 
     public void toggleButton(boolean logic) {
@@ -333,6 +348,7 @@ public class Controller implements Initializable {
             for (int j = 0; j < Constants.COL; j++) {
                 if(CellGrid[i][j].weighted)
                 {
+                    CellGrid[i][j].count = 0;
                     CellGrid[i][j].weighted = false;
                     CellGrid[i][j].distance = Integer.MAX_VALUE;
                     paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
@@ -348,6 +364,7 @@ public class Controller implements Initializable {
                 CellGrid[i][j].state = CellState.UNVISITED;
                 CellGrid[i][j].weighted = false;
                 CellGrid[i][j].distance = Integer.MAX_VALUE;
+                CellGrid[i][j].count = Constants.COUNT;
                 paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
             }
         }
@@ -356,6 +373,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void clearPathBtnEvent(ActionEvent actionEvent) {
+        clearGrid();
         for (int i = 0; i < Constants.ROW; i++) {
             for (int j = 0; j < Constants.COL; j++) {
                 if (CellGrid[i][j].state != CellState.WALL && CellGrid[i][j].state != CellState.WEIGHT && CellGrid[i][j].state != CellState.SOURCE && CellGrid[i][j].state != CellState.TARGET) {

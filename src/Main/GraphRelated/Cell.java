@@ -8,6 +8,7 @@ public class Cell {
     public int parent_x, parent_y;
     public String direction;
     public boolean weighted;
+    public int count;
 
     public CellState state;
 
@@ -19,6 +20,7 @@ public class Cell {
         this.distance = Integer.MAX_VALUE;
         //this.update = true;
         this.weighted = false;
+        this.count = 0;
     }
 
     public void setParent(int x, int y)
