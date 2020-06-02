@@ -158,7 +158,7 @@ public class Dijkstra extends Algorithm {
                                             } else {
                                                 //System.out.println("tracing...");
                                                 Cell tmp_parent;
-                                                int min_dist = 999999;
+                                                int min_dist = Integer.MAX_VALUE;
                                                 for (int j = 0; j < Constants.NUM_OF_NEIGHBORS && !pathFound; j++) {
                                                     if (inRange(tmp.x + X[j], tmp.y + Y[j])) {
                                                         tmp_parent = Controller.CellGrid[tmp.x + X[j]][tmp.y + Y[j]];

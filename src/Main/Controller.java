@@ -50,6 +50,15 @@ public class Controller implements Initializable {
         algoOptions.getItems().addAll("Breadth First Search", "Depth First Search", "Dijkstra Algorithm");
         algoOptions.setOnAction(e -> {
             selectedAlgo = algoOptions.getSelectionModel().getSelectedIndex();
+            switch (selectedAlgo) {
+                case 0: case 1:
+                    clearWeight();
+                    weightButton.setDisable(true);
+                    break;
+                case 2:
+                    weightButton.setDisable(false);
+                    break;
+            }
             startButton.setDisable(false);
         });
 
@@ -246,7 +255,12 @@ public class Controller implements Initializable {
                     CellGrid[x][y].count = Constants.WEIGHT_COUNT;
                 }
                 if (CellGrid[x][y].weighted)
+                {
+
+                    CellGrid[x][y].count = Constants.WEIGHT_COUNT;
                     paintBlock(CellGrid[x][y].x, CellGrid[x][y].y, Constants.BORDER, Constants.WEIGHT);
+                }
+
             }
         }
         //resetCount();
@@ -333,6 +347,7 @@ public class Controller implements Initializable {
                     break;
                 case 2:
                     algorithm = new Dijkstra();
+                    weightButton.setDisable(false);
                     break;
             }
 
@@ -376,11 +391,14 @@ public class Controller implements Initializable {
         clearGrid();
         for (int i = 0; i < Constants.ROW; i++) {
             for (int j = 0; j < Constants.COL; j++) {
-                if (CellGrid[i][j].state != CellState.WALL && CellGrid[i][j].state != CellState.WEIGHT && CellGrid[i][j].state != CellState.SOURCE && CellGrid[i][j].state != CellState.TARGET) {
+                if (CellGrid[i][j].state != CellState.WALL && !CellGrid[i][j].weighted && CellGrid[i][j].state != CellState.SOURCE && CellGrid[i][j].state != CellState.TARGET) {
                     CellGrid[i][j].state = CellState.UNVISITED;
                     paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
                     CellGrid[i][j].distance = Integer.MAX_VALUE;
+
                 }
+
+
             }
         }
     }
