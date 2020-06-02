@@ -1,5 +1,7 @@
 package Main;
 
+import Main.Configurations.Constants;
+import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,10 +13,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
+        Parent root = loader.load();
+
         primaryStage.setTitle("Algorithms Visualizer");
-        primaryStage.setScene(new Scene(root, 800, 625));
+        Scene mainScene = new Scene(root, 800, 625);
+        primaryStage.setScene(mainScene);
         primaryStage.getIcons().add(new Image("/Icons/path.png"));
+        Constants.stopButton = (JFXButton) mainScene.lookup("#stopButton");
 
         primaryStage.show();
     }

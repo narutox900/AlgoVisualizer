@@ -194,6 +194,7 @@ public class Controller implements Initializable {
                     } else if (currentState == CellState.WEIGHT) {
                         paintBlock(x, y, Constants.BORDER, Constants.WEIGHT);
                         CellGrid[x][y].state = CellState.WEIGHT;
+                        CellGrid[x][y].weighted = true;
                     } else {
                         paintBlock(x, y, Constants.BORDER, Constants.UNVISITED);
                         CellGrid[x][y].state = CellState.UNVISITED;
@@ -256,7 +257,6 @@ public class Controller implements Initializable {
                 }
                 if (CellGrid[x][y].weighted)
                 {
-
                     CellGrid[x][y].count = Constants.WEIGHT_COUNT;
                     paintBlock(CellGrid[x][y].x, CellGrid[x][y].y, Constants.BORDER, Constants.WEIGHT);
                 }
@@ -272,14 +272,6 @@ public class Controller implements Initializable {
         CellGrid[currentST[1][0]][currentST[1][1]].state = CellState.TARGET;
     }
 
-    public void resetCount() {
-        for (int x = 0; x < Constants.ROW; x++) {
-            for (int y = 0; y < Constants.COL; y++) {
-                if (CellGrid[x][y].state == CellState.WEIGHT)
-                    CellGrid[x][y].count = Constants.WEIGHT_COUNT;
-            }
-        }
-    }
 
     public void toggleButton(boolean logic) {
         stopButton.setDisable(logic);
@@ -374,12 +366,10 @@ public class Controller implements Initializable {
     }
     @FXML
     public void clearBtnEvent(ActionEvent actionEvent) {
+        clearWeight();
         for (int i = 0; i < Constants.ROW; i++) {
             for (int j = 0; j < Constants.COL; j++) {
                 CellGrid[i][j].state = CellState.UNVISITED;
-                CellGrid[i][j].weighted = false;
-                CellGrid[i][j].distance = Integer.MAX_VALUE;
-                CellGrid[i][j].count = Constants.COUNT;
                 paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
             }
         }
@@ -395,10 +385,7 @@ public class Controller implements Initializable {
                     CellGrid[i][j].state = CellState.UNVISITED;
                     paintBlock(i, j, Constants.BORDER, Constants.UNVISITED);
                     CellGrid[i][j].distance = Integer.MAX_VALUE;
-
                 }
-
-
             }
         }
     }
@@ -411,11 +398,11 @@ public class Controller implements Initializable {
     @FXML
     public void stopBtnEvent(ActionEvent actionEvent) {
         try {
-            if (Constants.currentThread != null)
+            if (Constants.currentThread != null) {
                 Constants.currentThread.killThread();
-
+                System.out.println("Thread killed///");
+            }
             applyColor = false;
-            clearGrid();
             Constants.isPause = false;
             toggleButton(true);
         } catch (Exception e) {

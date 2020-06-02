@@ -4,6 +4,7 @@ import Main.Configurations.Constants;
 import Main.Controller;
 import Main.GraphRelated.Cell;
 import Main.GraphRelated.CellState;
+import Main.GraphRelated.Direction;
 
 import java.util.LinkedList;
 
@@ -15,77 +16,88 @@ public class Dijkstra extends Algorithm {
 
         int x1, x2, y1, y2;
         int distance = 0;
-        String direction = null;
+        Direction direction = null;
         x1 = currNode.x;
         x2 = nextNode.x;
         y1 = currNode.y;
         y2 = nextNode.y;
 
         if (x2 < x1) {
-            if (currNode.direction == "up") {
-                distance = 1;
-                direction = "up";
-            } else if (currNode.direction == "right") {
-                distance = 2;
-                direction = "up";
-            } else if (currNode.direction == "left") {
-                distance = 2;
-                direction = "up";
-            } else if (currNode.direction == "down") {
-                distance = 3;
-                direction = "up";
+            switch (currNode.direction)
+            {
+                case UP:
+                    distance = 1;
+                    break;
+                case RIGHT:
+                    distance = 2;
+                    break;
+                case LEFT:
+                    distance = 2;
+                    break;
+                case DOWN:
+                    distance = 3;
+                    break;
             }
+            direction = Direction.UP;
         } else if (x2 > x1) {
-            if (currNode.direction == "up") {
-                distance = 3;
-                direction = "down";
-            } else if (currNode.direction == "right") {
-                distance = 2;
-
-                direction = "down";
-            } else if (currNode.direction == "left") {
-                distance = 2;
-                direction = "down";
-            } else if (currNode.direction == "down") {
-                distance = 1;
-                direction = "down";
+            switch (currNode.direction)
+            {
+                case UP:
+                    distance = 3;
+                    break;
+                case RIGHT:
+                    distance = 2;
+                    break;
+                case LEFT:
+                    distance = 2;
+                    break;
+                case DOWN:
+                    distance = 1;
+                    break;
             }
+            direction = Direction.DOWN;
         }
 
         if (y2 < y1) {
-            if (currNode.direction == "up") {
-                distance = 2;
-                direction = "left";
-            } else if (currNode.direction == "right") {
-                distance = 1;
-                direction = "left";
-            } else if (currNode.direction == "left") {
-                distance = 3;
-                direction = "left";
-            } else if (currNode.direction == "down") {
-                distance = 2;
-                direction = "left";
+            switch (currNode.direction)
+            {
+                case UP:
+                    distance = 2;
+                    break;
+                case RIGHT:
+                    distance = 1;
+                    break;
+                case LEFT:
+                    distance = 3;
+                    break;
+                case DOWN:
+                    distance = 2;
+                    break;
             }
+            direction = Direction.LEFT;
         } else if (y2 > y1) {
-            if (currNode.direction == "up") {
-                distance = 2;
-                direction = "right";
-            } else if (currNode.direction == "right") {
-                distance = 1;
-                direction = "right";
-            } else if (currNode.direction == "left") {
-                distance = 3;
-                direction = "right";
-            } else if (currNode.direction == "down") {
-                distance = 2;
-                direction = "right";
+            switch (currNode.direction)
+            {
+                case UP:
+                    distance = 2;
+                    break;
+                case RIGHT:
+                    distance = 1;
+                    break;
+                case LEFT:
+                    distance = 3;
+                    break;
+                case DOWN:
+                    distance = 2;
+                    break;
             }
+            direction = Direction.RIGHT;
         }
 
         if (currNode == source)
             nextNode.distance = Integer.MAX_VALUE;
         int distanceToCompare = currNode.distance + distance;
-
+        if(currNode.weighted) distanceToCompare += Constants.WEIGHT_COUNT;
         if (distanceToCompare < nextNode.distance) {
             nextNode.distance = distanceToCompare;
             nextNode.parent_x = currNode.x;
@@ -102,7 +114,7 @@ public class Dijkstra extends Algorithm {
         Cell current, tmp;
         queue.clear();
         source.distance = 0;
-        source.direction = "right";
+        source.direction = Direction.RIGHT;
         queue.add(source);
         try {
             // pop the waiting queue
@@ -110,17 +122,15 @@ public class Dijkstra extends Algorithm {
                 Thread.sleep(Constants.THREAD_SLEEP_TIME);
                 if (!Constants.isPause) {
                     current = queue.poll();
-                    if (current.count > 0) {
+                    if (current.count > 0 && current.state != CellState.WALL) {
+                        current.distance += 2;
                         current.count -= 1;
                         queue.add(current);
                     } else {
-
-                        Cell min_dis_cell = null;
-                        int min_dis = Integer.MAX_VALUE;
                         if (current.state != CellState.SOURCE) {
                             if (current.weighted) {
                                 Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.WEIGHT);
-                                current.distance += 5;
+                                current.distance += Constants.WEIGHT_COUNT;
                             } else
                                 Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.VISITED);
                         }
@@ -129,26 +139,14 @@ public class Dijkstra extends Algorithm {
 
                         for (int i = 0; i < Constants.NUM_OF_NEIGHBORS && !pathFound; i++) {
                             if (inRange(current.x + X[i], current.y + Y[i])) {
-
                                 tmp = Controller.CellGrid[current.x + X[i]][current.y + Y[i]];
+
                                 if (tmp.state != CellState.WALL) {
-                                /*
-                                if (tmp.state == CellState.WEIGHT)
-                                {
-                                    tmp.distance = current.distance + Constants.ADDITIONAL_WEIGHT;
-                                    tmp.parent_x = current.x;
-                                    tmp.parent_y = current.y;
-                                    tmp.direction = current.direction;
-                                }
-                                else
-
-                                 */
                                     tmp = updateNode(current, tmp);
-
                                     if (tmp.state == CellState.TARGET || tmp.state == CellState.UNVISITED
                                             || tmp.state == CellState.WEIGHT) {
 
-                                        if (tmp.count == 0 || tmp.count == 5) {
+                                        if (tmp.count == 0 || tmp.count == Constants.WEIGHT_COUNT) {
 
                                             if (tmp.state != CellState.TARGET) {
                                                 Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.NEXT_VISIT);
@@ -156,7 +154,6 @@ public class Dijkstra extends Algorithm {
                                                     Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.WEIGHT);
                                                 }
                                             } else {
-                                                //System.out.println("tracing...");
                                                 Cell tmp_parent;
                                                 int min_dist = Integer.MAX_VALUE;
                                                 for (int j = 0; j < Constants.NUM_OF_NEIGHBORS && !pathFound; j++) {
@@ -187,7 +184,7 @@ public class Dijkstra extends Algorithm {
                     Thread.sleep(Constants.THREAD_PAUSE_TIME);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             System.out.println("Thread interrupted while sleeping");
         }
     }
