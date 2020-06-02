@@ -21,101 +21,68 @@ public class Dijkstra extends Algorithm {
         y1 = currNode.y;
         y2 = nextNode.y;
 
-        if( x2 < x1) {
-            if(currNode.direction == "up")
-            {
+        if (x2 < x1) {
+            if (currNode.direction == "up") {
                 distance = 1;
                 direction = "up";
-            }
-            else if (currNode.direction == "right")
-            {
+            } else if (currNode.direction == "right") {
                 distance = 2;
                 direction = "up";
-            }
-            else if (currNode.direction == "left")
-            {
+            } else if (currNode.direction == "left") {
                 distance = 2;
                 direction = "up";
-            }
-            else if (currNode.direction =="down")
-            {
+            } else if (currNode.direction == "down") {
                 distance = 3;
                 direction = "up";
             }
-        }
-        else if( x2 > x1)
-        {
-            if(currNode.direction == "up")
-            {
+        } else if (x2 > x1) {
+            if (currNode.direction == "up") {
                 distance = 3;
                 direction = "down";
-            }
-            else if (currNode.direction == "right")
-            {
+            } else if (currNode.direction == "right") {
                 distance = 2;
 
                 direction = "down";
-            }
-            else if (currNode.direction == "left")
-            {
+            } else if (currNode.direction == "left") {
                 distance = 2;
                 direction = "down";
-            }
-            else if (currNode.direction =="down")
-            {
+            } else if (currNode.direction == "down") {
                 distance = 1;
                 direction = "down";
             }
         }
 
-        if(y2 < y1) {
-            if(currNode.direction == "up")
-            {
+        if (y2 < y1) {
+            if (currNode.direction == "up") {
                 distance = 2;
                 direction = "left";
-            }
-            else if (currNode.direction == "right")
-            {
+            } else if (currNode.direction == "right") {
                 distance = 1;
                 direction = "left";
-            }
-
-            else if (currNode.direction == "left")
-            {
+            } else if (currNode.direction == "left") {
                 distance = 3;
                 direction = "left";
-            }
-            else if (currNode.direction =="down")
-            {
+            } else if (currNode.direction == "down") {
                 distance = 2;
                 direction = "left";
             }
-        }
-
-        else if( y2 > y1) {
-            if(currNode.direction == "up")
-            {
+        } else if (y2 > y1) {
+            if (currNode.direction == "up") {
                 distance = 2;
                 direction = "right";
-            }
-            else if (currNode.direction == "right")
-            {
+            } else if (currNode.direction == "right") {
                 distance = 1;
                 direction = "right";
-            }
-            else if (currNode.direction == "left")
-            {
+            } else if (currNode.direction == "left") {
                 distance = 3;
                 direction = "right";
-            }
-            else if (currNode.direction =="down")
-            {
+            } else if (currNode.direction == "down") {
                 distance = 2;
                 direction = "right";
             }
         }
 
-        if(currNode == source)
+        if (currNode == source)
             nextNode.distance = Integer.MAX_VALUE;
         int distanceToCompare = currNode.distance + distance;
 
@@ -141,30 +108,30 @@ public class Dijkstra extends Algorithm {
             // pop the waiting queue
             while (!queue.isEmpty() && !pathFound) {
                 Thread.sleep(Constants.THREAD_SLEEP_TIME);
-                if (!Constants.isPause)
-                {
+                if (!Constants.isPause) {
                     current = queue.poll();
-                    Cell min_dis_cell = null;
-                    int min_dis = Integer.MAX_VALUE;
-                    if (current.state != CellState.SOURCE)
-                    {
-                        if(current.weighted)
-                        {
-                            Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.WEIGHT);
-                            current.distance += 5;
+                    if (current.count > 0) {
+                        current.count -= 1;
+                        queue.add(current);
+                    } else {
+
+                        Cell min_dis_cell = null;
+                        int min_dis = Integer.MAX_VALUE;
+                        if (current.state != CellState.SOURCE) {
+                            if (current.weighted) {
+                                Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.WEIGHT);
+                                current.distance += 5;
+                            } else
+                                Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.VISITED);
                         }
 
-                        else
-                            Controller.paintBlock(current.x, current.y, Constants.BORDER, Constants.VISITED);
-                    }
+                        //Go to all neighbors of the current state and push into queue if path not found
 
-                    //Go to all neighbors of the current state and push into queue if path not found
+                        for (int i = 0; i < Constants.NUM_OF_NEIGHBORS && !pathFound; i++) {
+                            if (inRange(current.x + X[i], current.y + Y[i])) {
 
-                    for (int i = 0; i < Constants.NUM_OF_NEIGHBORS && !pathFound; i++) {
-                        if (inRange(current.x + X[i], current.y + Y[i])) {
-
-                            tmp = Controller.CellGrid[current.x + X[i]][current.y + Y[i]];
-                            if (tmp.state != CellState.WALL) {
+                                tmp = Controller.CellGrid[current.x + X[i]][current.y + Y[i]];
+                                if (tmp.state != CellState.WALL) {
                                 /*
                                 if (tmp.state == CellState.WEIGHT)
                                 {
@@ -176,47 +143,47 @@ public class Dijkstra extends Algorithm {
                                 else
 
                                  */
-                                tmp = updateNode(current, tmp);
+                                    tmp = updateNode(current, tmp);
 
-                                if (tmp.state == CellState.TARGET || tmp.state == CellState.UNVISITED
-                                        || tmp.state == CellState.WEIGHT)
-                                {
+                                    if (tmp.state == CellState.TARGET || tmp.state == CellState.UNVISITED
+                                            || tmp.state == CellState.WEIGHT) {
 
-                                    if (tmp.state != CellState.TARGET)
-                                    {
-                                        Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.NEXT_VISIT);
-                                        if(tmp.weighted)
-                                            Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.WEIGHT);
-                                    }
+                                        if (tmp.count == 0 || tmp.count == 5) {
 
-                                    else {
-                                        //System.out.println("tracing...");
-                                        Cell tmp_parent;
-                                        int min_dist = 999999;
-                                        for (int j = 0; j < Constants.NUM_OF_NEIGHBORS && !pathFound; j++) {
-                                            if (inRange(tmp.x + X[j], tmp.y + Y[j])) {
-                                                tmp_parent = Controller.CellGrid[tmp.x + X[j]][tmp.y + Y[j]];
-                                                if(tmp_parent.distance < min_dist) {
-                                                    min_dist = tmp_parent.distance;
-                                                    tmp.parent_x = tmp_parent.x;
-                                                    tmp.parent_y = tmp_parent.y;
+                                            if (tmp.state != CellState.TARGET) {
+                                                Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.NEXT_VISIT);
+                                                if (tmp.weighted) {
+                                                    Controller.paintBlock(tmp.x, tmp.y, Constants.BORDER, Constants.WEIGHT);
                                                 }
+                                            } else {
+                                                //System.out.println("tracing...");
+                                                Cell tmp_parent;
+                                                int min_dist = Integer.MAX_VALUE;
+                                                for (int j = 0; j < Constants.NUM_OF_NEIGHBORS && !pathFound; j++) {
+                                                    if (inRange(tmp.x + X[j], tmp.y + Y[j])) {
+                                                        tmp_parent = Controller.CellGrid[tmp.x + X[j]][tmp.y + Y[j]];
+                                                        if (tmp_parent.distance < min_dist) {
+                                                            min_dist = tmp_parent.distance;
+                                                            tmp.parent_x = tmp_parent.x;
+                                                            tmp.parent_y = tmp_parent.y;
+                                                        }
+                                                    }
+                                                }
+                                                tracePath(tmp);
+                                                //shortestPath = tmp.distance;
+                                                pathFound = true;
+                                                break;
                                             }
-                                        }
-                                        tracePath(tmp);
-                                        //shortestPath = tmp.distance;
-                                        pathFound = true;
-                                        break;
-                                    }
 
-                                    Controller.CellGrid[tmp.x][tmp.y].state = CellState.VISITED;
-                                    queue.add(tmp);
+                                            Controller.CellGrid[tmp.x][tmp.y].state = CellState.VISITED;
+                                            queue.add(tmp);
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                else
+                } else
                     Thread.sleep(Constants.THREAD_PAUSE_TIME);
             }
         } catch (Exception e) {
