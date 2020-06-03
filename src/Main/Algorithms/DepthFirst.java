@@ -69,7 +69,9 @@ public class DepthFirst extends Algorithm {
             try {
                 Thread.sleep(Constants.THREAD_PAUSE_TIME);
             }
-            catch (Exception e) { System.out.println("Thread sleep fail"); }
+            catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Thread sleep fail"); }
             finally {
                 DFS(current);
             }

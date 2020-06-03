@@ -6,7 +6,7 @@ public class Cell {
     public int x, y, weight;
     public int distance;
     public int parent_x, parent_y;
-    public String direction;
+    public Direction direction;
     public boolean weighted;
     public int count;
 

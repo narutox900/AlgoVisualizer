@@ -49,6 +49,7 @@ public class Algorithm extends Thread {
 
                 previous = current;
             } else {
+                Constants.stopButton.setDisable(true);
                 if (previous != null) { //make the source box run from source to actual target
                     if(previous.weighted)
                         Controller.paintBlock(previous.x, previous.y, Constants.BORDER, Constants.WEIGHT_IN_PATH);
@@ -79,11 +80,11 @@ public class Algorithm extends Thread {
 
         //repaint the last one to target
         if(previous != null) Controller.paintBlock(previous.x, previous.y, Constants.BORDER, Constants.TARGET);
+        Constants.stopButton.setDisable(false);
     }
 
     public void killThread() {
         System.out.println("Thread killed");
-
         pathFound=true;
         this.interrupt();
 
