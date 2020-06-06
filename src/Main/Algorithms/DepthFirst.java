@@ -98,6 +98,10 @@ public class DepthFirst extends Algorithm {
         DFS(source);
 
         Constants.currentThread = null;
+        if(!pathFound) {
+            System.out.println("No path found!");
+            killThread();
+        }
         System.out.println("Depth-First Search Algorithm Finish");
     }
 }

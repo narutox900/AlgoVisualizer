@@ -182,6 +182,9 @@ public class Dijkstra extends Algorithm {
                     }
                 } else
                     Thread.sleep(Constants.THREAD_PAUSE_TIME);
+            } if (!pathFound) {
+                System.out.println("No path available!\nDijkstra Search Algorithm Finish\n");
+                killThread();
             }
         } catch (Exception e) {
 //            e.printStackTrace();

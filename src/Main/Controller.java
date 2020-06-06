@@ -79,6 +79,7 @@ public class Controller implements Initializable {
         pauseButton.setAlignment(Pos.CENTER_LEFT);
         wallButton.setAlignment(Pos.CENTER_LEFT);
         weightButton.setAlignment(Pos.CENTER_LEFT);
+        mazeButton.setAlignment(Pos.CENTER_LEFT);
 
         for (int i = 0; i < 2; i++) currentST[i][0] = -1;
 
