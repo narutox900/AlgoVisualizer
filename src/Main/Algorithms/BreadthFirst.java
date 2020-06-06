@@ -55,6 +55,9 @@ public class BreadthFirst extends Algorithm {
                 }
                 else
                     Thread.sleep(Constants.THREAD_PAUSE_TIME);
+            } if (!pathFound) {
+                System.out.println("No path available!\nBreadth-First Search Algorithm Finish!");
+                killThread();
             }
         } catch (Exception e) {
             System.out.println("Thread interrupted while sleeping");

@@ -88,7 +88,7 @@
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Icons/stop.png" />
+                        <Image url="@../Icons/maze.png" />
                      </image>
                   </ImageView>
                </graphic>
