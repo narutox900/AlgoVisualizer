@@ -4,11 +4,8 @@ import Main.Configurations.Constants;
 import Main.Controller;
 import Main.GraphRelated.Cell;
 import Main.GraphRelated.CellState;
-import javafx.scene.control.Control;
 
-import javax.swing.*;
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 // Similar Part For All Algorithm
 // Inherited from thread for performance improvement

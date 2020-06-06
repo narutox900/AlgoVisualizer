@@ -10,6 +10,7 @@ import Main.Animation.BounceIn;
 
 import Main.GraphRelated.Cell;
 import Main.GraphRelated.CellState;
+import Main.MazeGenerator.MazeGenerator;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -33,7 +34,7 @@ public class Controller implements Initializable {
     @FXML
     private GridPane platform;
     @FXML
-    private JFXButton sourceButton, wallButton, unvisitedButton, targetButton, weightButton, startButton, stopButton, clearButton, clearPathButton, pauseButton;
+    private JFXButton sourceButton, wallButton, unvisitedButton, targetButton, weightButton, startButton, stopButton, clearButton, clearPathButton, pauseButton, mazeButton;
 
     public static BorderPane[][] BorderGrid = new BorderPane[Constants.ROW][Constants.COL];
     public static Cell[][] CellGrid = new Cell[Constants.ROW][Constants.COL];
@@ -410,4 +411,12 @@ public class Controller implements Initializable {
         }
     }
 
+    @FXML
+    public void mazeBtnEvent(ActionEvent actionEvent) {
+        MazeGenerator mazeGenerator = new MazeGenerator();
+        mazeGenerator.start();
+
+        System.out.println("Thread drawing maze kill...");
+        mazeGenerator.interrupt();
+    }
 }
