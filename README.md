@@ -13,7 +13,7 @@
 
 ## General info
 
-This project is designed and implemented in Java as a product of Object-Oriented Programming course. Some OOP principles: SOLID - Single Responsibility Principle, Open Close Principle, Livskov Substitution Principle, Interface Segragation Principle,Dependency Inversion Principle are elaborately considered on the design of the project.
+This project is designed and implemented in Java as a product of Object-Oriented Programming course. \Some OOP principles: SOLID - Single Responsibility Principle, Open Close Principle, Livskov Substitution Principle, Interface Segragation Principle,Dependency Inversion Principle are elaborately considered on the design of the project.
 
 
 ## Screenshots
@@ -28,14 +28,14 @@ This project is designed and implemented in Java as a product of Object-Oriented
 
 
 ## Setup
-To run this project, you just need to install and add the required libraries to project.
-Change VM options:
+To run this project, you just need to install and add the required libraries to project.\
+Change VM options:\
 Run / Edit configurations / VM options:
 --module-path path-to-your-javafx-library --add-modules javafx.controls,javafx.fxml,javafx.base
 
 ## Basic Controls
 You need to create a source and destination to start the pathfinding.
-![source-dest](img/gif2.gif)
+![source-dest](https://media.giphy.com/media/W2bgL13JtCgwMiTGJ1/giphy.gif)
 ### Algorithms
 Our project supports 3 searching algorithms:
 * Breadth first search (unweighted)
@@ -52,8 +52,8 @@ One more interesting point is that you can create maze and challenge the algorit
 ![maze](img/gif4.gif)
 
 ## Status
-Project is: _in progress_. We will develop this application with some more awesome functions in the near future.
+Project is: _in progress_. \We will develop this application with some more awesome functions in the near future.
 
 ## Inspiration
-Project inspired by Clément Mihailescu
+Project inspired by Clément Mihailescu\
 Link github: https://github.com/clementmihailescu/Pathfinding-Visualizer
