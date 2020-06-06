@@ -51,7 +51,7 @@ One more interesting point is that you can create maze and challenge the algorit
 ![maze](https://media.giphy.com/media/Qx4nFy0hlRmDnY4tBG/giphy.gif)
 ![maze](https://media.giphy.com/media/S45vJso7UrnCW9DxFY/giphy.gif)
 
-<div style="width:100%;height:0;padding-bottom:67%;position:relative;"><iframe src="https://giphy.com/embed/Job7LWC4BZQyznFqii" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/Job7LWC4BZQyznFqii">via GIPHY</a></p>
+
 
 ## Status
 Project is: _in progress_. \We will develop this application with some more awesome functions in the near future.
