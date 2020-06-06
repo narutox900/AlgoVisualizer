@@ -35,8 +35,7 @@ Run / Edit configurations / VM options:
 
 ## Basic Controls
 You need to create a source and destination to start the pathfinding.
-![source-dest](http://www.giphy.com/gifs/ftxI1WQ6TbevJkI4m1)
-### Algorithms
+![source-dest](https://media.giphy.com/media/Job7LWC4BZQyznFqii/giphy.gif
 Our project supports 3 searching algorithms:
 * Breadth first search (unweighted)
 * Depth first search (unweighted)
@@ -45,12 +44,12 @@ Our project supports 3 searching algorithms:
 ### Complicated Stuff
 Those are the basics! Now you can be free to make the map as complicated as you desire. You can easily add weighted cells and walls.
 
-![add-weight](http://www.giphy.com/gifs/kC8DFbHeySInVKGEdi)
+![add-weight](https://media.giphy.com/media/YO9v7lbMgZJPrUV6oi/giphy.gif)
 
 ### Maze
 One more interesting point is that you can create maze and challenge the algorithms for find a path to reach the destination.
-![maze](http://www.giphy.com/gifs/lnC6IPwwRuBliZKxi4)
-![maze](http://www.giphy.com/gifs/iEv7Sw6zYav8Sb7EZW)
+![maze](https://media.giphy.com/media/Qx4nFy0hlRmDnY4tBG/giphy.gif)
+![maze](https://media.giphy.com/media/S45vJso7UrnCW9DxFY/giphy.gif)
 
 ## Status
 Project is: _in progress_. \We will develop this application with some more awesome functions in the near future.
