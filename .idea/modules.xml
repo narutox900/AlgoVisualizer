@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AlgoVisualProject.iml" filepath="$PROJECT_DIR$/AlgoVisualProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AlgoVisualizer.iml" filepath="$PROJECT_DIR$/AlgoVisualizer.iml" />
     </modules>
   </component>
 </project>

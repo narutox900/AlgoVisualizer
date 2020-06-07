@@ -14,7 +14,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="AlgoVisualProject" options="--add-exports javafx.graphics/com.sun.javafx.util=Main" />
+      <module name="AlgoVisualizer" options="--add-exports javafx.graphics/com.sun.javafx.util=Main" />
     </option>
   </component>
 </project>
