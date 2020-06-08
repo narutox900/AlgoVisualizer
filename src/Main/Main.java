@@ -21,6 +21,7 @@ public class Main extends Application {
         primaryStage.setScene(mainScene);
         primaryStage.getIcons().add(new Image("/Icons/path.png"));
         Constants.stopButton = (JFXButton) mainScene.lookup("#stopButton");
+        Constants.mazeButton = (JFXButton) mainScene.lookup("#mazeButton");
 
         primaryStage.show();
     }
