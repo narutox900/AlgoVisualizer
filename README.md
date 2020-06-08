@@ -6,7 +6,6 @@
 * [Screenshots](#screenshots)
 * [Setup](#setup)
 * [Basic Controls](#basiccontrols)
-* [Features](#features)
 * [Status](#status)
 * [Inspiration](#inspiration)
 
@@ -30,12 +29,12 @@ This project is designed and implemented in Java as a product of Object-Oriented
 ## Setup
 To run this project, you just need to install and add the required libraries to project.\
 Change VM options:\
-Run / Edit configurations / VM options:
+Run / Edit configurations / VM options: \
 --module-path path-to-your-javafx-library --add-modules javafx.controls,javafx.fxml,javafx.base
 
 ## Basic Controls
 You need to create a source and destination to start the pathfinding.
-![source-dest](https://media.giphy.com/media/Job7LWC4BZQyznFqii/giphy.gif)
+![source-dest](https://media.giphy.com/media/Job7LWC4BZQyznFqii/giphy.gif) \
 Our project supports 3 searching algorithms:
 * Breadth first search (unweighted)
 * Depth first search (unweighted)
@@ -54,7 +53,8 @@ One more interesting point is that you can create maze and challenge the algorit
 
 
 ## Status
-Project is: _in progress_. \We will develop this application with some more awesome functions in the near future.
+Project is: _in progress_. \
+We will develop this application with some more awesome functions in the near future.
 
 ## Inspiration
 Project inspired by Clément Mihailescu\
