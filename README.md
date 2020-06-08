@@ -42,7 +42,7 @@ Our project supports 3 searching algorithms:
 * Dijkstra (weighted)
 
 ### Complicated Stuff
-Those are the basics! Now you can be free to make the map as complicated as you desire. You can easily add weighted cells and walls. \
+Those are the basics! Now you can be free to make the map as complicated as you desire. You can easily add weighted cells and walls. 
 
 ![add-weight](https://media.giphy.com/media/YO9v7lbMgZJPrUV6oi/giphy.gif)
 
