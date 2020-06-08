@@ -139,6 +139,7 @@ public class MazeGenerator extends Thread {
 
     @Override
     public void run() {
+        Constants.mazeButton.setDisable(true);
         int[][] maze = MazeGenerator.generateMaze();
 
         for (int i = 0; i < Constants.ROW; i++)
@@ -160,5 +161,6 @@ public class MazeGenerator extends Thread {
                     System.out.println("Thread sleep in maze fail!");
                 }
             }
+        Constants.mazeButton.setDisable(false);
     }
 }
