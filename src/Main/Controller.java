@@ -414,6 +414,8 @@ public class Controller implements Initializable {
 
     @FXML
     public void mazeBtnEvent(ActionEvent actionEvent) {
+        currentST[0][0]=-1;
+        currentST[1][0]=-1;
         MazeGenerator mazeGenerator = new MazeGenerator();
         mazeGenerator.start();
 

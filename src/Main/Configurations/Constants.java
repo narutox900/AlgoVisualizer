@@ -39,5 +39,6 @@ public class Constants
 
     public static Algorithm currentThread = null;
     public static JFXButton stopButton = null;
+    public static JFXButton mazeButton = null;
     public static boolean isPause = false;
 }
