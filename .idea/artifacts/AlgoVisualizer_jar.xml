@@ -2,6 +2,9 @@
   <artifact type="jar" name="AlgoVisualizer:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/AlgoVisualizer_jar</output-path>
     <root id="archive" name="AlgoVisualizer.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/Main/resources/META-INF/MANIFEST.MF" />
+      </element>
       <element id="module-output" name="AlgoVisualizer" />
       <element id="extracted-dir" path="$PROJECT_DIR$/libs/jfoenix-9.0.8.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/libs/controlsfx-11.0.1.jar" path-in-jar="/" />
