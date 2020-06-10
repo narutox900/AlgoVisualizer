@@ -8,7 +8,7 @@ import com.jfoenix.controls.JFXButton;
 public class Constants
 {
     // Design preference
-    public static final int ROW = 41, COL = 41;
+    public static final int ROW = 41, COL = 61;
    //public static final int  = 30, COL = 40;
 
     //Colors

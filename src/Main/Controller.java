@@ -286,6 +286,7 @@ public class Controller implements Initializable {
         startButton.setDisable(!logic);
         clearPathButton.setDisable(!logic);
         clearButton.setDisable(!logic);
+        mazeButton.setDisable(!logic);
     }
 
     // Events
